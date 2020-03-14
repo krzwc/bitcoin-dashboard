@@ -1,7 +1,7 @@
 import ACTIONS from '../actions';
 import { State, Action } from '../interfaces';
 
-const fetchReducer = (state: State, action: Action): State => {
+const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case ACTIONS.FETCHING:
             return {
@@ -26,4 +26,4 @@ const fetchReducer = (state: State, action: Action): State => {
     }
 };
 
-export default fetchReducer;
+export default reducer;

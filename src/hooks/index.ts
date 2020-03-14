@@ -1,3 +1,4 @@
 import useFetch from './useFetch';
+import usePoll from './usePoll';
 
-export { useFetch };
+export { useFetch, usePoll };
