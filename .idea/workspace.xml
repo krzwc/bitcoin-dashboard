@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fe5ec99-4093-48f7-9d0c-81eb15a303ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/actions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useFetch/fetchReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useThunkReducer/reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useFetch/useFetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useFetch/useFetch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +100,7 @@
       <workItem from="1582060367560" duration="501000" />
       <workItem from="1582060941444" duration="42000" />
       <workItem from="1582060992742" duration="287000" />
-      <workItem from="1584177824557" duration="22601000" />
+      <workItem from="1584177824557" duration="22726000" />
     </task>
     <servers />
   </component>
