@@ -1,7 +1,7 @@
 import ACTIONS from './actions';
 
 export interface State {
-    result: string;
+    result: number;
     loading: boolean;
     error: string;
 }
@@ -9,7 +9,7 @@ export interface State {
 export interface Action {
     type: ACTIONS;
     payload?: {
-        result?: string;
+        result?: number;
         error?: string;
     };
 }
