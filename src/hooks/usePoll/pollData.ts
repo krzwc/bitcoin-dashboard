@@ -1,16 +1,17 @@
 import ACTIONS from '../actions';
 import { EnhancedDispatch } from '../interfaces';
 import fetchData from '../useFetch/fetchData';
-import Timeout = NodeJS.Timeout;
+import useInterval from '../useInterval';
 
 const INTERVAL = 5000;
 
-const pollData = (dispatch: EnhancedDispatch): Timeout => {
-    dispatch({ type: ACTIONS.POLLING });
+const pollData = (dispatch: EnhancedDispatch) => {
+    const [start, stop] = useInterval(() => {
+        dispatch({ type: ACTIONS.POLLING });
+        fetchData(dispatch);
+    }, INTERVAL);
 
-    const timer = setInterval(() => fetchData(dispatch), INTERVAL);
-
-    return timer;
+    return [start, stop];
 };
 
 export default pollData;

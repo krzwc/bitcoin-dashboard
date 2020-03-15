@@ -29,7 +29,6 @@
     "comment-format": [
       true,
       "check-space",
-      "check-uppercase",
       { "ignore-pattern": "tslint" }
     ],
     "completed-docs": [
