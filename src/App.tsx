@@ -12,13 +12,18 @@ const App = () => {
     const [result, loading, error, start, stop] = usePoll();
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
-            setChartData(chartData.push({ time: result[0], USD: result[1] }));
+            setChartData((data) => {
+                if (data.size >= 31) {
+                    return data.shift().push({ time: result[0], USD: result[1] });
+                }
+
+                return data.push({ time: result[0], USD: result[1] });
+            });
         }
     }, [result]);
 
     return (
         <div className="container">
-            {console.log(chartData)}
             <h1>{!loading && result && result[1]}</h1>
             {error && <p className="error">{error}</p>}
             <Chart data={chartData.toJS()} />
