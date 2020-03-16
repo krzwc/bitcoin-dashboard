@@ -1,19 +1,26 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { convertTimestamp } from '../utils/timeservice';
+
+interface ChartPropsItem {
+    time: string;
+    USD: number;
+}
 
 interface ChartProps {
-    data: {
-        time: string;
-        USD: number;
-    }[];
+    data: ChartPropsItem[];
 }
+
+const covertData = (data: ChartPropsItem[]) => {
+    return data.map((tick) => ({ ...tick, time: convertTimestamp(tick.time) }));
+};
 
 const Chart = ({ data }: ChartProps) => {
     return (
         <LineChart
             width={500}
             height={300}
-            data={data}
+            data={covertData(data)}
             margin={{
                 top: 5,
                 right: 30,
