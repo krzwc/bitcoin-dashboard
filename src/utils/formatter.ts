@@ -1,4 +1,8 @@
-const formatter = (response: any): [string, number] =>
-    response ? [response.time.updatedISO, response.bpi.EUR.rate_float] : [null, null];
+import { get } from 'lodash-es';
+
+const formatter = (response: any): [string, number] => [
+    get(response, ['time', 'updatedISO'], null),
+    get(response, ['bpi', 'EUR', 'rate_float'], null),
+];
 
 export default formatter;

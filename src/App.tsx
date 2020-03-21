@@ -4,6 +4,7 @@ import { isNull } from 'lodash-es';
 import Chart from './components/Chart';
 import { usePoll } from './hooks';
 import './App.scss';
+import { TOTAL_X_TICKS } from './utils/consts';
 
 const initialState = List([]);
 
@@ -13,7 +14,7 @@ const App = () => {
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {
-                if (data.size >= 31) {
+                if (data.size >= TOTAL_X_TICKS) {
                     return data.shift().push({ time: result[0], USD: result[1] });
                 }
 

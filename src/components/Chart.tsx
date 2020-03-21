@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { convertTimestamp } from '../utils/timeservice';
 
@@ -11,8 +12,8 @@ interface ChartProps {
     data: ChartPropsItem[];
 }
 
-const covertData = (data: ChartPropsItem[]) => {
-    return data.map((tick) => ({ ...tick, time: convertTimestamp(tick.time) }));
+const formatXAxis = (tickItem: string) => {
+    return convertTimestamp(tickItem);
 };
 
 const Chart = ({ data }: ChartProps) => {
@@ -20,7 +21,7 @@ const Chart = ({ data }: ChartProps) => {
         <LineChart
             width={500}
             height={300}
-            data={covertData(data)}
+            data={data}
             margin={{
                 top: 5,
                 right: 30,
@@ -29,7 +30,7 @@ const Chart = ({ data }: ChartProps) => {
             }}
         >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
+            <XAxis dataKey="time" tickFormatter={formatXAxis} />
             <YAxis type="number" domain={['dataMin', 'dataMax']} />
             <Tooltip />
             <Legend />
