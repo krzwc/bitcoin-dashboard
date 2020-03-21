@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { List } from 'immutable';
 import { isNull } from 'lodash-es';
-import Chart from './components/Chart';
-import { usePoll } from './hooks';
-import './App.scss';
-import { TOTAL_X_TICKS } from './utils/consts';
+import Chart from '../../components/chart';
+import { usePoll } from '../../hooks';
+import { TOTAL_X_TICKS } from '../../utils/consts';
 
 const initialState = List([]);
 
-const App = () => {
+const BitcoinChart = () => {
     const [chartData, setChartData] = useState(initialState);
     const [result, loading, error, start, stop] = usePoll();
     useEffect(() => {
@@ -34,4 +33,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default BitcoinChart;
