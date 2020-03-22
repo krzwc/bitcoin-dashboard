@@ -1,12 +1,24 @@
 import { ReactNode } from 'react';
-import { Layout, ReactGridLayoutProps } from 'react-grid-layout';
+import { Layout, Layouts, ReactGridLayoutProps } from 'react-grid-layout';
 
-export interface DashboardGridItem extends Layout {
+export interface DashboardGridItemsInclIPerBreakpoint extends Layouts {
+    [P: string]: DashboardGridItemsInclI[];
+}
+
+export interface DashboardGridItemsInclI extends Layout {
+    component: ReactNode;
+}
+
+export interface DashboardGridItemsPerBreakPoint {
+    [P: string]: DashboardGridItem[];
+}
+
+export interface DashboardGridItem extends Omit<Layout, 'i'> {
     component: ReactNode;
 }
 
 export interface DashboardProps extends ReactGridLayoutProps {
-    gridItems: DashboardGridItem[];
+    gridItems: DashboardGridItemsPerBreakPoint;
     height: number;
     width: number;
 }
