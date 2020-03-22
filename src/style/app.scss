@@ -1,13 +1,7 @@
-@mixin center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
+@import './mixins';
+@import '../components/components';
+@import '../containers/containers';
 
 .container {
     @include center;
-    flex-direction: column;
-    padding-top: 10px;
-    width: 100%;
-    height: 100vh;
 }

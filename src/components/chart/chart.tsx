@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { convertTimestamp } from '../utils/timeservice';
+import { convertTimestamp } from '../../utils/timeservice';
 
 interface ChartPropsItem {
     time: string;

@@ -39,7 +39,7 @@ const Dashboard: FunctionComponent<DashboardProps> = ({ gridItems }) => {
     }, [gridItems]);
 
     return (
-        <GridLayout layout={state.layout} rowHeight={150} {...defaultProps}>
+        <GridLayout className="dashboard" layout={state.layout} rowHeight={150} {...defaultProps}>
             {state.domLayout}
         </GridLayout>
     );
