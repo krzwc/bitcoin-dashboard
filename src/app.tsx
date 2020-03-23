@@ -1,6 +1,8 @@
 import React from 'react';
 import Dashboard from './components/dashboard';
 import './style/app.scss';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 import { DashboardGridItemsPerBreakPoint } from './components/dashboard/interfaces';
 
 import BitcoinChart from './containers/bitcoin-chart';

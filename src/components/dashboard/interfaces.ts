@@ -19,6 +19,6 @@ export interface DashboardGridItem extends Omit<Layout, 'i'> {
 
 export interface DashboardProps extends ReactGridLayoutProps {
     gridItems: DashboardGridItemsPerBreakPoint;
-    height: number;
-    width: number;
+    /*height: number;
+    width: number;*/
 }

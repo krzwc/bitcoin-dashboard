@@ -1,20 +1,20 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout';
 import { noop, get, mapValues } from 'lodash-es';
-import { withResizeDetector } from 'react-resize-detector';
+// import { withResizeDetector } from 'react-resize-detector';
 import {
     DashboardProps,
-    DashboardGridItemsInclI,
     DashboardGridItemsInclIPerBreakpoint,
     DashboardGridItemsPerBreakPoint,
     DashboardGridItem,
 } from './interfaces';
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
 const defaultProps = {
     isDraggable: true,
     isResizable: true,
     onLayoutChange: noop,
-    /*cols: 12,*/
     autoSize: true,
     containerPadding: [0, 0] as [number, number],
     /*width: 1,*/
@@ -25,18 +25,6 @@ const addI = (gridItems: DashboardGridItem[]) =>
         ...item,
         i: String(index),
     }));
-
-/*const generateLayout = (gridItems: DashboardGridItemsPerBreakPoint) => {
-    return ({
-        ...Object.keys(gridItems).map((key) => {
-            return {
-                [key]: [
-                    ...gridItems[key].map((item, index) => ({ ...item, i: String(index) })),
-                ] as DashboardGridItemsInclI[],
-            };
-        }),
-    } as unknown) as DashboardGridItemsInclIPerBreakpoint;
-};*/
 
 const generateLayout = (gridItems: DashboardGridItemsPerBreakPoint) => {
     return mapValues(gridItems, addI);
@@ -75,4 +63,5 @@ const Dashboard: FunctionComponent<DashboardProps> = ({ gridItems }) => {
     );
 };
 
-export default withResizeDetector(Dashboard);
+// export default withResizeDetector(Dashboard);
+export default Dashboard;
