@@ -1,3 +1,10 @@
-.recharts-wrapper {
-  background: transparent;
+.chart {
+  .recharts-wrapper {
+    background: transparent;
+  }
+
+  position: relative;
+  height: 100%;
+  wifth: 100%;
+  overflow: hidden;
 }

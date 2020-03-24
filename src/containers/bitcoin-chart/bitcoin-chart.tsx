@@ -5,10 +5,16 @@ import Chart from '../../components/chart';
 import { usePoll } from '../../hooks';
 import { TOTAL_X_TICKS } from '../../utils/consts';
 import Container from '../../components/container';
+import { withResizeDetector } from 'react-resize-detector';
 
 const initialState = List([]);
 
-const BitcoinChart = () => {
+interface BitcoinChartProps {
+    width: number;
+    height: number;
+}
+
+const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
     const [chartData, setChartData] = useState(initialState);
     const [result, loading, error, start, stop] = usePoll();
     useEffect(() => {
@@ -27,11 +33,11 @@ const BitcoinChart = () => {
         <Container>
             <h1>{!loading && result && result[1]}</h1>
             {error && <p className="error">{error}</p>}
-            <Chart data={chartData.toJS()} />
+            <Chart data={chartData.toJS()} width={width} height={height} />
             <button onClick={start as () => void}>Start</button>
             <button onClick={stop as () => void}>Stop</button>
         </Container>
     );
 };
 
-export default BitcoinChart;
+export default withResizeDetector(BitcoinChart);

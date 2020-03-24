@@ -10,24 +10,22 @@ interface ChartPropsItem {
 
 interface ChartProps {
     data: ChartPropsItem[];
+    width: number;
+    height: number;
 }
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem);
 };
 
-const Chart = ({ data }: ChartProps) => {
+const Chart = ({ data, width, height }: ChartProps) => {
     return (
         <LineChart
-            width={500}
-            height={300}
+            className="chart"
+            width={width}
+            height={height}
             data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
+            margin={{ top: 20, right: 50, bottom: 20 }}
         >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tickFormatter={formatXAxis} />
