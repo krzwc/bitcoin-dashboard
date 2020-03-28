@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { noop, get, mapValues } from 'lodash-es';
-// import { withResizeDetector } from 'react-resize-detector';
+
 import {
     DashboardProps,
     DashboardGridItemsInclIPerBreakpoint,
@@ -17,7 +17,6 @@ const defaultProps = {
     onLayoutChange: noop,
     autoSize: true,
     containerPadding: [0, 0] as [number, number],
-    /*width: 1,*/
 };
 
 const addI = (gridItems: DashboardGridItem[]) =>
@@ -63,5 +62,4 @@ const Dashboard: FunctionComponent<DashboardProps> = ({ gridItems }) => {
     );
 };
 
-// export default withResizeDetector(Dashboard);
 export default Dashboard;

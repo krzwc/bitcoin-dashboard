@@ -1,5 +1,4 @@
 import React from 'react';
-/*import { withResizeDetector } from 'react-resize-detector';*/
 
 interface ContainerProps {
     children: React.ReactNode;

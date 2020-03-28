@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { convertTimestamp } from '../../utils/timeservice';
 
 interface ChartPropsItem {
@@ -31,7 +31,6 @@ const Chart = ({ data, width, height }: ChartProps) => {
             <XAxis dataKey="time" tickFormatter={formatXAxis} />
             <YAxis type="number" domain={['dataMin', 'dataMax']} />
             <Tooltip />
-            <Legend />
             <Line type="monotone" dataKey="USD" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
     );

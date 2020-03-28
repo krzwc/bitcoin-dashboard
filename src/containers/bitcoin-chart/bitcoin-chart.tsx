@@ -16,7 +16,7 @@ interface BitcoinChartProps {
 
 const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
     const [chartData, setChartData] = useState(initialState);
-    const [result, loading, error, start, stop] = usePoll();
+    const [result, loading, error, start] = usePoll();
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {
@@ -29,13 +29,17 @@ const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
         }
     }, [result]);
 
+    useEffect(() => {
+        (start as () => void)();
+    }, []);
+
     return (
         <Container>
             <h1>{!loading && result && result[1]}</h1>
             {error && <p className="error">{error}</p>}
             <Chart data={chartData.toJS()} width={width} height={height} />
-            <button onClick={start as () => void}>Start</button>
-            <button onClick={stop as () => void}>Stop</button>
+            {/*<button onClick={start as () => void}>Start</button>
+            <button onClick={stop as () => void}>Stop</button>*/}
         </Container>
     );
 };
