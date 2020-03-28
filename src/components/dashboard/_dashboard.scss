@@ -21,4 +21,8 @@
       border-right-color: black;
     }*/
   }
+
+  .react-grid-item {
+    @include center;
+  }
 }

@@ -35,7 +35,7 @@ const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
 
     return (
         <Container>
-            <h1>{!loading && result && result[1]}</h1>
+            <h1>Current: {!loading && result && result[1]}</h1>
             {error && <p className="error">{error}</p>}
             <Chart data={chartData.toJS()} width={width} height={height} />
             {/*<button onClick={start as () => void}>Start</button>
