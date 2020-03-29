@@ -1,11 +1,15 @@
 import ACTIONS from '../actions';
 import { EnhancedDispatch } from '../interfaces';
-import { ENDPOINT } from '../../utils/endpoint';
-import formatter from '../../utils/formatter';
 
-const fetchData = (dispatch: EnhancedDispatch): void => {
+interface Fetch {
+    dispatch: EnhancedDispatch;
+    endpoint: string;
+    formatter(response: any): {};
+}
+
+const fetchData = ({ dispatch, endpoint, formatter }: Fetch): void => {
     dispatch({ type: ACTIONS.FETCHING });
-    fetch(ENDPOINT)
+    fetch(endpoint)
         .then((response) => response.json())
         .then((response) => {
             dispatch({

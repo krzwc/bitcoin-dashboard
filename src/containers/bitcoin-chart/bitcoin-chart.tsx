@@ -6,6 +6,9 @@ import { usePoll } from '../../hooks';
 import { TOTAL_X_TICKS } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
+import { POLLING_INTERVAL } from '../../utils/consts';
+import { ENDPOINT } from '../../utils/endpoint';
+import formatter from '../../utils/formatter';
 
 const initialState = List([]);
 
@@ -16,7 +19,7 @@ interface BitcoinChartProps {
 
 const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
     const [chartData, setChartData] = useState(initialState);
-    const [result, loading, error, start] = usePoll();
+    const [result, loading, error, start] = usePoll(ENDPOINT.CURRENT, POLLING_INTERVAL, formatter);
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {

@@ -5,11 +5,11 @@ import initialState from '../initialState';
 import useThunkReducer from '../useThunkReducer';
 import fetchData from './fetchData';
 
-const useFetch = () => {
+const useFetch = (endpoint: string, formatter: (response: any) => {}) => {
     const [state, enhancedDispatch] = useThunkReducer(reducer, initialState);
 
     useEffect(() => {
-        fetchData(enhancedDispatch);
+        fetchData({ dispatch: enhancedDispatch, endpoint, formatter });
     }, [fetchData, enhancedDispatch]);
 
     const { result, loading, error } = state;

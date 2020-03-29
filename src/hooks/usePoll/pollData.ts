@@ -3,13 +3,18 @@ import { EnhancedDispatch } from '../interfaces';
 import fetchData from '../useFetch/fetchData';
 import useInterval from '../useInterval';
 
-import { POLLING_INTERVAL } from '../../utils/consts';
+interface Poll {
+    dispatch: EnhancedDispatch;
+    endpoint: string;
+    interval: number;
+    formatter(response: any): {};
+}
 
-const pollData = (dispatch: EnhancedDispatch) => {
+const pollData = ({ dispatch, endpoint, formatter, interval }: Poll) => {
     const [start, stop] = useInterval(() => {
         dispatch({ type: ACTIONS.POLLING });
-        fetchData(dispatch);
-    }, POLLING_INTERVAL);
+        fetchData({ dispatch, endpoint, formatter });
+    }, interval);
 
     return [start, stop];
 };
