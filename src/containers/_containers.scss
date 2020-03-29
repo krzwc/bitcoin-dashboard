@@ -1,1 +1,10 @@
 @import './bitcoin-chart/bitcoin-chart';
+@import './historical-chart/historical-chart';
+
+.container {
+  display: flex;
+  h1 {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}

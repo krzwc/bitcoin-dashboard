@@ -16,7 +16,7 @@ interface BitcoinChartProps {
     height: number;
 }
 
-const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
+const HistoricalChart = ({ width, height }: BitcoinChartProps) => {
     const [chartData, setChartData] = useState(initialState);
     const [result, loading, error, start] = usePoll(ENDPOINT.CURRENT, POLLING_INTERVAL, formatter);
     useEffect(() => {
@@ -46,4 +46,4 @@ const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
     );
 };
 
-export default withResizeDetector(BitcoinChart);
+export default withResizeDetector(HistoricalChart);
