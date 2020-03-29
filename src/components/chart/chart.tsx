@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { convertTimestamp } from '../../utils/timeservice';
 
-interface ChartPropsItem {
+export interface ChartPropsItem {
     time: string;
     USD: number;
 }
@@ -12,13 +11,10 @@ interface ChartProps {
     data: ChartPropsItem[];
     width: number;
     height: number;
+    xAxisFormatter(tickItem: string): string;
 }
 
-const formatXAxis = (tickItem: string) => {
-    return convertTimestamp(tickItem);
-};
-
-const Chart = ({ data, width, height }: ChartProps) => {
+const Chart = ({ data, width, height, xAxisFormatter }: ChartProps) => {
     return (
         <LineChart
             className="chart"
@@ -28,7 +24,7 @@ const Chart = ({ data, width, height }: ChartProps) => {
             margin={{ top: 20, right: 50, bottom: 20 }}
         >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tickFormatter={formatXAxis} />
+            <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
             <YAxis type="number" domain={['dataMin', 'dataMax']} />
             <Tooltip />
             <Line type="monotone" dataKey="USD" stroke="#8884d8" activeDot={{ r: 8 }} />

@@ -7,18 +7,19 @@ import { TOTAL_X_TICKS, POLLING_INTERVAL } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
 import { ENDPOINT } from '../../utils/endpoint';
-import formatter from '../../utils/formatter';
+import { currentDataFormatter } from '../../utils/formatter';
+import { ResizeDetectorChartProps } from '../interfaces';
+import { convertTimestamp } from '../../utils/timeservice';
 
 const initialState = List([]);
 
-interface BitcoinChartProps {
-    width: number;
-    height: number;
-}
+const formatXAxis = (tickItem: string) => {
+    return convertTimestamp(tickItem);
+};
 
-const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
+const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [chartData, setChartData] = useState(initialState);
-    const [result, loading, error, start] = usePoll(ENDPOINT.CURRENT, POLLING_INTERVAL, formatter);
+    const [result, loading, error, start] = usePoll(ENDPOINT.CURRENT, POLLING_INTERVAL, currentDataFormatter);
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {
@@ -39,7 +40,7 @@ const BitcoinChart = ({ width, height }: BitcoinChartProps) => {
         <Container>
             <h1>Current: {!loading && result && result[1]}</h1>
             {error && <p className="error">{error}</p>}
-            <Chart data={chartData.toJS()} width={width} height={height} />
+            <Chart data={chartData.toJS()} width={width} height={height} xAxisFormatter={formatXAxis} />
             {/*<button onClick={start as () => void}>Start</button>
             <button onClick={stop as () => void}>Stop</button>*/}
         </Container>

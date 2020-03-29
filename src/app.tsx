@@ -6,11 +6,12 @@ import 'react-resizable/css/styles.css';
 import { DashboardGridItemsPerBreakPoint } from './components/dashboard/interfaces';
 
 import BitcoinChart from './containers/bitcoin-chart';
+import HistoricalChart from './containers/historical-chart';
 
 const gridItemsArray: DashboardGridItemsPerBreakPoint = {
     lg: [
         { component: <BitcoinChart />, x: 0, y: 0, w: 6, h: 3 },
-        { component: <BitcoinChart />, x: 6, y: 0, w: 6, h: 3 },
+        { component: <HistoricalChart />, x: 6, y: 0, w: 6, h: 3 },
     ],
 };
 
