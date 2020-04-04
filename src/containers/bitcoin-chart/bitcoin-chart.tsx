@@ -6,7 +6,7 @@ import { usePoll } from '../../hooks';
 import { TOTAL_X_TICKS, POLLING_INTERVAL } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINT } from '../../utils/endpoint';
+import { ENDPOINTS } from '../../utils/endpoint';
 import { currentDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
@@ -19,7 +19,7 @@ const formatXAxis = (tickItem: string) => {
 
 const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [chartData, setChartData] = useState(initialState);
-    const [result, loading, error, start] = usePoll(ENDPOINT.CURRENT, POLLING_INTERVAL, currentDataFormatter);
+    const [result, loading, error, start] = usePoll(ENDPOINTS.CURRENT, POLLING_INTERVAL, currentDataFormatter);
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {

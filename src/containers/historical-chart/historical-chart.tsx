@@ -4,7 +4,7 @@ import { ChartPropsItem } from '../../components/chart/chart';
 import { useFetch } from '../../hooks';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINT } from '../../utils/endpoint';
+import { ENDPOINTS } from '../../utils/endpoint';
 import { historicalDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
@@ -14,7 +14,7 @@ const formatXAxis = (tickItem: string) => {
 };
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
-    const [result, error] = useFetch(ENDPOINT.HISTORICAL, historicalDataFormatter);
+    const [result, error] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
 
     return (
         <Container>
