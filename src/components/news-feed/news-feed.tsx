@@ -1,20 +1,21 @@
 import React from 'react';
+import { isEmpty } from 'lodash-es';
 
-interface NewsItem {
+export interface NewsItem {
     published_at: string;
     title: string;
     url: string;
     id: number;
 }
 
-interface NewsFeedProps {
+export interface NewsFeedProps {
     results: NewsItem[];
 }
 
 const NewsFeed = ({ results }: NewsFeedProps) => {
     return (
         <ul>
-            {results &&
+            {!isEmpty(results) &&
                 results.map((newsItem) => (
                     <li key={newsItem.id}>
                         {newsItem.published_at} - <a href={newsItem.url}>{newsItem.title}</a>

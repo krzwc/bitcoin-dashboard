@@ -7,11 +7,13 @@ import { DashboardGridItemsPerBreakPoint } from './components/dashboard/interfac
 
 import BitcoinChart from './containers/bitcoin-chart';
 import HistoricalChart from './containers/historical-chart';
+import BitcoinNewsFeed from './containers/bitcoin-news-feed';
 
 const gridItemsArray: DashboardGridItemsPerBreakPoint = {
     lg: [
         { component: <BitcoinChart />, x: 0, y: 0, w: 6, h: 3 },
         { component: <HistoricalChart />, x: 6, y: 0, w: 6, h: 3 },
+        { component: <BitcoinNewsFeed />, x: 0, y: 6, w: 12, h: 3 },
     ],
 };
 

@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import { isNull } from 'lodash-es';
 import Chart from '../../components/chart';
 import { usePoll } from '../../hooks';
-import { TOTAL_X_TICKS, POLLING_INTERVAL } from '../../utils/consts';
+import { TOTAL_X_TICKS, POLLING_INTERVALS } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
 import { ENDPOINTS } from '../../utils/endpoint';
@@ -19,7 +19,7 @@ const formatXAxis = (tickItem: string) => {
 
 const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [chartData, setChartData] = useState(initialState);
-    const [result, loading, error, start] = usePoll(ENDPOINTS.CURRENT, POLLING_INTERVAL, currentDataFormatter);
+    const [result, loading, error, start] = usePoll(ENDPOINTS.CURRENT, POLLING_INTERVALS.CHART, currentDataFormatter);
     useEffect(() => {
         if (!isNull(result) && !isNull(result[0]) && !isNull(result[1])) {
             setChartData((data) => {
