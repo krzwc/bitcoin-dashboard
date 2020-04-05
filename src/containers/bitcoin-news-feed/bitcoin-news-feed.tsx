@@ -9,8 +9,9 @@ import { POLLING_INTERVALS } from '../../utils/consts';
 import { isNull } from 'lodash-es';
 import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
+import { List } from 'immutable';
 
-const initialState: NewsItem[] = [];
+const initialState: List<NewsItem> = List([]);
 
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [news, setNews] = useState(initialState);
@@ -18,7 +19,7 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
 
     useEffect(() => {
         if (!isNull(result)) {
-            setNews((result as unknown) as NewsItem[]);
+            setNews(List((result as unknown) as NewsItem[]));
         }
     }, [result]);
 
