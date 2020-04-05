@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, SyntheticEvent } from 'react';
 import NewsFeed from '../../components/news-feed';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
@@ -6,15 +6,24 @@ import { ENDPOINTS } from '../../utils/endpoint';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { useFetch, usePoll } from '../../hooks';
 import { POLLING_INTERVALS } from '../../utils/consts';
-import { isNull, isEmpty } from 'lodash-es';
+import { get, isNull, isEmpty } from 'lodash-es';
 import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
-import { List } from 'immutable';
+import { Map } from 'immutable';
 
-const initialState: List<NewsItem> = List([]);
+interface State {
+    [key: string]: number | string | NewsItem[];
+}
+
+const initialState: Map<string, number | string | NewsItem[]> = Map({
+    count: null,
+    next: null,
+    previous: null,
+    results: [],
+});
 
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
-    const [news, setNews] = useState(initialState);
+    const [state, setState] = useState(initialState);
     const [pollingResult, , pollingError, pollingStart] = usePoll(
         ENDPOINTS.NEWS,
         POLLING_INTERVALS.NEWS,
@@ -24,27 +33,40 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
 
     useEffect(() => {
         if (!isNull(pollingResult)) {
-            setNews(List((pollingResult as unknown) as NewsItem[]));
+            setState(Map((pollingResult as unknown) as State));
         }
     }, [pollingResult]);
 
     useEffect(() => {
         if (!isNull(fetchingResult)) {
-            setNews(List((fetchingResult as unknown) as NewsItem[]));
+            setState(Map((fetchingResult as unknown) as State));
         }
     }, [fetchingResult]);
-
 
     useEffect(() => {
         (pollingStart as () => void)();
     }, []);
+
+    const previousHandler = (e: SyntheticEvent) => {
+        e.stopPropagation();
+        console.log('hi');
+    };
+
+    const nextHandler = (e: SyntheticEvent) => {
+        e.stopPropagation();
+        console.log('hi');
+    };
 
     return (
         <Container>
             <h1>News</h1>
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
-            {!isEmpty(news.toJS()) && <NewsFeed results={(news.toJS() as unknown) as NewsItem[]} />}
+            {!isEmpty(get(state.toJS(), ['results'])) && (
+                <NewsFeed results={(get(state.toJS(), ['results']) as unknown) as NewsItem[]} />
+            )}
+            <button onClick={previousHandler}>Previous</button>
+            <button onClick={nextHandler}>Next</button>
         </Container>
     );
 };
