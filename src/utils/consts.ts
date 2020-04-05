@@ -1,6 +1,6 @@
 export enum POLLING_INTERVALS {
-    CHART = 5000,
-    NEWS = 5000,
+    CHART = 30000,
+    NEWS = 60000,
 };
 
 export const TOTAL_X_TICKS = 10;
