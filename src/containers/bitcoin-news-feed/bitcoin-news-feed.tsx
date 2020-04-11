@@ -12,10 +12,15 @@ import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
 
 interface State {
-    [key: string]: number | string | NewsItem[];
+    current: string;
+    count: number;
+    next: string;
+    previous: string;
+    results: NewsItem[];
 }
 
-const initialState: Map<string, number | string | NewsItem[]> = Map({
+const initialState: Map<string, State[keyof State]> = Map({
+    current: ENDPOINTS.NEWS,
     count: null,
     next: null,
     previous: null,
@@ -24,42 +29,47 @@ const initialState: Map<string, number | string | NewsItem[]> = Map({
 
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [state, setState] = useState(initialState);
+
     const [pollingResult, , pollingError, pollingStart] = usePoll(
-        ENDPOINTS.NEWS,
+        (state.toJS() as State).current,
         POLLING_INTERVALS.NEWS,
         newsDataFormatter,
     );
-    const [fetchingResult, fetchingError] = useFetch(ENDPOINTS.NEWS, newsDataFormatter);
+
+    const [fetchingResult, fetchingError] = useFetch((state.toJS() as State).current, newsDataFormatter);
 
     useEffect(() => {
         if (!isNull(pollingResult)) {
-            setState(Map((pollingResult as unknown) as State));
+            setState(Map({ ...((pollingResult as unknown) as State), current: (state.toJS() as State).current }));
         }
-    }, [pollingResult]);
-
-    useEffect(() => {
         if (!isNull(fetchingResult)) {
-            setState(Map((fetchingResult as unknown) as State));
+            setState(Map({ ...((fetchingResult as unknown) as State), current: (state.toJS() as State).current }));
         }
-    }, [fetchingResult]);
+    }, [pollingResult, fetchingResult]);
 
     useEffect(() => {
         (pollingStart as () => void)();
+        if ((state.toJS() as State).current !== ENDPOINTS.NEWS) {
+            stop();
+        }
     }, []);
 
     const previousHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
+        // TODO: setState() => current = previous
         console.log('hi');
     };
 
     const nextHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
+        // TODO: setState() => current = next
         console.log('hi');
     };
 
     return (
         <Container>
             <h1>News</h1>
+            {console.log(state.toJS())}
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) && (
