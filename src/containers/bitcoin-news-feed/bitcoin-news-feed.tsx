@@ -2,10 +2,9 @@ import React, { useEffect, useState, SyntheticEvent } from 'react';
 import NewsFeed from '../../components/news-feed';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINTS } from '../../utils/endpoint';
+import { ENDPOINTS, convertURL } from '../../utils/endpoint';
 import { ResizeDetectorChartProps } from '../interfaces';
-import { useFetch, usePoll } from '../../hooks';
-import { POLLING_INTERVALS } from '../../utils/consts';
+import { useFetch } from '../../hooks';
 import { get, isNull, isEmpty } from 'lodash-es';
 import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
@@ -30,47 +29,37 @@ const initialState: Map<string, State[keyof State]> = Map({
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [state, setState] = useState(initialState);
 
-    const [pollingResult, , pollingError, pollingStart] = usePoll(
-        (state.toJS() as State).current,
-        POLLING_INTERVALS.NEWS,
-        newsDataFormatter,
-    );
-
     const [fetchingResult, fetchingError] = useFetch((state.toJS() as State).current, newsDataFormatter);
 
     useEffect(() => {
-        if (!isNull(pollingResult)) {
-            setState(Map({ ...((pollingResult as unknown) as State), current: (state.toJS() as State).current }));
-        }
         if (!isNull(fetchingResult)) {
-            setState(Map({ ...((fetchingResult as unknown) as State), current: (state.toJS() as State).current }));
-        }
-    }, [pollingResult, fetchingResult]);
+            const convertedFetchingResult = {
+                ...((fetchingResult as unknown) as State),
+                next: ((fetchingResult as unknown) as State).next
+                    ? convertURL(((fetchingResult as unknown) as State).next)
+                    : null,
+                previous: ((fetchingResult as unknown) as State).previous
+                    ? convertURL(((fetchingResult as unknown) as State).previous)
+                    : null,
+            };
 
-    useEffect(() => {
-        (pollingStart as () => void)();
-        if ((state.toJS() as State).current !== ENDPOINTS.NEWS) {
-            stop();
+            setState(Map({ ...convertedFetchingResult, current: (state.toJS() as State).current }));
         }
-    }, []);
+    }, [fetchingResult]);
 
     const previousHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
-        // TODO: setState() => current = previous
-        console.log('hi');
+        setState(Map({ ...(state.toJS() as State), current: (state.toJS() as State).previous }));
     };
 
     const nextHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
-        // TODO: setState() => current = next
-        console.log('hi');
+        setState(Map({ ...(state.toJS() as State), current: (state.toJS() as State).next }));
     };
 
     return (
         <Container>
             <h1>News</h1>
-            {console.log(state.toJS())}
-            {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) && (
                 <NewsFeed results={(get(state.toJS(), ['results']) as unknown) as NewsItem[]} />

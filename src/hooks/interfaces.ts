@@ -1,7 +1,7 @@
 import ACTIONS from './actions';
 
 export interface State {
-    result: number;
+    result: any;
     loading: boolean;
     error: string;
 }

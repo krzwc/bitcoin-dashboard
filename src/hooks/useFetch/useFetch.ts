@@ -10,7 +10,7 @@ const useFetch = (endpoint: string, formatter: (response: any) => {}) => {
 
     useEffect(() => {
         fetchData({ dispatch: enhancedDispatch, endpoint, formatter });
-    }, [fetchData, enhancedDispatch]);
+    }, [fetchData, enhancedDispatch, endpoint]);
 
     const { result, loading, error } = state;
 
