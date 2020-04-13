@@ -1,5 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash-es';
+import { convertTimestamp } from '../../utils/timeservice'
 
 export interface NewsItem {
     published_at: string;
@@ -18,7 +19,7 @@ const NewsFeed = ({ results }: NewsFeedProps) => {
             {!isEmpty(results) &&
                 results.map((newsItem) => (
                     <li key={newsItem.id}>
-                        {newsItem.published_at} - <a href={newsItem.url}>{newsItem.title}</a>
+                        {convertTimestamp(newsItem.published_at)} - <a href={newsItem.url}>{newsItem.title}</a>
                     </li>
                 ))}
         </ul>

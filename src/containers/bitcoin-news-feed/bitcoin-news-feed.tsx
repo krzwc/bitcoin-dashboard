@@ -43,18 +43,18 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
                     : null,
             };
 
-            setState(Map({ ...convertedFetchingResult, current: (state.toJS() as State).current }));
+            setState(state.merge(convertedFetchingResult));
         }
     }, [fetchingResult]);
 
     const previousHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
-        setState(Map({ ...(state.toJS() as State), current: (state.toJS() as State).previous }));
+        setState(state.set('current', state.get('previous')));
     };
 
     const nextHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
-        setState(Map({ ...(state.toJS() as State), current: (state.toJS() as State).next }));
+        setState(state.set('current', state.get('next')));
     };
 
     return (
