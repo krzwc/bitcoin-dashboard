@@ -9,6 +9,7 @@ import { get, isNull, isEmpty } from 'lodash-es';
 import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
+import Loader from '../../components/loader';
 
 interface State {
     current: string;
@@ -61,8 +62,10 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
         <Container>
             <h1>News</h1>
             {fetchingError && <p className="error">{fetchingError}</p>}
-            {!isEmpty(get(state.toJS(), ['results'])) && (
+            {!isEmpty(get(state.toJS(), ['results'])) ? (
                 <NewsFeed results={(get(state.toJS(), ['results']) as unknown) as NewsItem[]} />
+            ) : (
+                <Loader />
             )}
             <button onClick={previousHandler}>Previous</button>
             <button onClick={nextHandler}>Next</button>

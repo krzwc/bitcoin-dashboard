@@ -8,6 +8,8 @@ import { ENDPOINTS } from '../../utils/endpoint';
 import { historicalDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
+import Loader from '../../components/loader';
+import { isEmpty } from 'lodash-es';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
@@ -20,12 +22,16 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
         <Container>
             <h1>Historical</h1>
             {error && <p className="error">{error}</p>}
-            <Chart
-                data={(result as unknown) as ChartPropsItem[]}
-                width={width}
-                height={height}
-                xAxisFormatter={formatXAxis}
-            />
+            {!isEmpty(result) ? (
+                <Chart
+                    data={(result as unknown) as ChartPropsItem[]}
+                    width={width}
+                    height={height}
+                    xAxisFormatter={formatXAxis}
+                />
+            ) : (
+                <Loader />
+            )}
         </Container>
     );
 };

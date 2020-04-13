@@ -11,6 +11,7 @@ import { currentDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
+import Loader from '../../components/loader';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -53,8 +54,10 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             <h1>Current: {!pollingLoading && pollingResult && pollingResult[1]}</h1>
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
-            {!isEmpty(chartData.toJS()) && (
+            {!isEmpty(chartData.toJS()) ? (
                 <Chart data={chartData.toJS()} width={width} height={height} xAxisFormatter={formatXAxis} />
+            ) : (
+                <Loader />
             )}
             {/*<button onClick={start as () => void}>Start</button>
             <button onClick={stop as () => void}>Stop</button>*/}
