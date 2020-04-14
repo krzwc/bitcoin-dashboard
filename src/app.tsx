@@ -15,6 +15,26 @@ const gridItemsArray: DashboardGridItemsPerBreakPoint = {
         { component: <HistoricalChart />, x: 6, y: 0, w: 6, h: 3 },
         { component: <BitcoinNewsFeed />, x: 0, y: 6, w: 12, h: 3 },
     ],
+    md: [
+        { component: <BitcoinChart />, x: 0, y: 0, w: 5, h: 3 },
+        { component: <HistoricalChart />, x: 0, y: 3, w: 5, h: 3 },
+        { component: <BitcoinNewsFeed />, x: 5, y: 0, w: 5, h: 6 },
+    ],
+    sm: [
+        { component: <BitcoinChart />, x: 0, y: 0, w: 3, h: 3 },
+        { component: <HistoricalChart />, x: 0, y: 3, w: 3, h: 3 },
+        { component: <BitcoinNewsFeed />, x: 3, y: 0, w: 3, h: 6 },
+    ],
+    xs: [
+        { component: <BitcoinChart />, x: 0, y: 0, w: 4, h: 3 },
+        { component: <HistoricalChart />, x: 0, y: 3, w: 4, h: 3 },
+        { component: <BitcoinNewsFeed />, x: 0, y: 6, w: 4, h: 3 },
+    ],
+    xxs: [
+        { component: <BitcoinChart />, x: 0, y: 0, w: 2, h: 3 },
+        { component: <HistoricalChart />, x: 0, y: 3, w: 2, h: 3 },
+        { component: <BitcoinNewsFeed />, x: 0, y: 6, w: 2, h: 3 },
+    ],
 };
 
 const App = () => {
