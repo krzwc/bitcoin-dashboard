@@ -1,24 +1,25 @@
 import { ReactNode } from 'react';
-// import { DashboardGridItemsPerBreakPoint } from '../components/dashboard/interfaces';
+import { DashboardGridItemsPerBreakPoint, DashboardGridItem } from '../components/dashboard/interfaces';
+import { Layout } from 'react-grid-layout';
 
-type sizes = 'lg' | 'md' | 'sm' | 'xs' | 'xxs';
-type layoutKey = 'x' | 'y' | 'w' | 'h';
-type layoutObj = {
-    [key in layoutKey]: number;
-};
-type Layout = {
-    [key in sizes]: layoutObj[];
-};
+interface LayoutObj {
+    [P: string]: Omit<Layout, 'i'>[];
+}
 
-export default (componentArray: ReactNode[], layout: Layout) => {
-    return Object.entries(layout).map((layoutItem) => {
-        return {
-            [layoutItem[0]]: componentArray.map((component, index) => {
-                return {
-                    component,
-                    ...layoutItem[1][index],
-                };
-            }),
-        };
-    });
+export default (componentArray: ReactNode[], layout: LayoutObj): DashboardGridItemsPerBreakPoint => {
+    return Object.fromEntries(
+        Object.entries(layout).map((layoutItem): [string, DashboardGridItem[]] => {
+            return [
+                layoutItem[0],
+                componentArray.map(
+                    (component, index): DashboardGridItem => {
+                        return {
+                            component,
+                            ...layoutItem[1][index],
+                        };
+                    },
+                ),
+            ];
+        }),
+    );
 };
