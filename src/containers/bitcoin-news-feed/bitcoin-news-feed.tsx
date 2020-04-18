@@ -1,4 +1,4 @@
-import React, { useEffect, useState, SyntheticEvent } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import NewsFeed from '../../components/news-feed';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
@@ -10,8 +10,9 @@ import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
 import Loader from '../../components/loader';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
-interface State {
+export interface State {
     current: string;
     count: number;
     next: string;
@@ -32,6 +33,9 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
 
     const [fetchingResult, fetchingError] = useFetch((state.toJS() as State).current, newsDataFormatter);
 
+    const bottomBoundaryRef = useRef<HTMLDivElement>(null);
+    useInfiniteScroll(bottomBoundaryRef, setState, state.set('current', state.get('next')));
+
     useEffect(() => {
         if (!isNull(fetchingResult)) {
             const convertedFetchingResult = {
@@ -48,7 +52,7 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
         }
     }, [fetchingResult]);
 
-    const previousHandler = (e: SyntheticEvent) => {
+    /*const previousHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
         setState(state.set('current', state.get('previous')));
     };
@@ -56,10 +60,10 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const nextHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
         setState(state.set('current', state.get('next')));
-    };
+    };*/
 
     return (
-        <Container>
+        <Container ref={bottomBoundaryRef} width={width} height={height}>
             <h1>News</h1>
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (
@@ -67,8 +71,8 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
             ) : (
                 <Loader />
             )}
-            <button onClick={previousHandler}>Previous</button>
-            <button onClick={nextHandler}>Next</button>
+            {/*<button onClick={previousHandler}>Previous</button>
+            <button onClick={nextHandler}>Next</button>*/}
         </Container>
     );
 };
