@@ -1,3 +1,5 @@
+// credit: https://www.smashingmagazine.com/2020/03/infinite-scroll-lazy-image-loading-react/
+
 import { useCallback, useEffect, RefObject, Dispatch, SetStateAction } from 'react';
 import { State } from '../../containers/bitcoin-news-feed/bitcoin-news-feed';
 import { Map } from 'immutable';

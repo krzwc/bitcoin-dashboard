@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, SyntheticEvent } from 'react';
 import NewsFeed from '../../components/news-feed';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
@@ -10,7 +10,7 @@ import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
 import Loader from '../../components/loader';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+// import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 export interface State {
     current: string;
@@ -34,12 +34,15 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [fetchingResult, fetchingError] = useFetch((state.toJS() as State).current, newsDataFormatter);
 
     const bottomBoundaryRef = useRef<HTMLDivElement>(null);
-    useInfiniteScroll(bottomBoundaryRef, setState, state.set('current', state.get('next')));
+    // useInfiniteScroll(bottomBoundaryRef, setState, state.set('current', state.get('next')));
 
     useEffect(() => {
-        if (!isNull(fetchingResult)) {
+        if (!isNull(fetchingResult) && get(state.toJS(), ['results']).length <= 40) {
             const convertedFetchingResult = {
-                ...((fetchingResult as unknown) as State),
+                // ...((fetchingResult as unknown) as State),
+                current: state.get('current'),
+                count: fetchingResult.count,
+                results: [...(state.get('results') as NewsItem[]), ...fetchingResult.results],
                 next: ((fetchingResult as unknown) as State).next
                     ? convertURL(((fetchingResult as unknown) as State).next)
                     : null,
@@ -48,31 +51,34 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
                     : null,
             };
 
-            setState(state.merge(convertedFetchingResult));
+            /*setState(state.merge(convertedFetchingResult));*/
+            setState(Map(convertedFetchingResult));
         }
     }, [fetchingResult]);
 
     /*const previousHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
         setState(state.set('current', state.get('previous')));
-    };
+    };*/
 
     const nextHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
         setState(state.set('current', state.get('next')));
-    };*/
+    };
 
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
             <h1>News</h1>
+            {console.log(get(state.toJS(), ['results']))}
+            {console.log(get(state.toJS(), ['results']).length)}
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (
                 <NewsFeed results={(get(state.toJS(), ['results']) as unknown) as NewsItem[]} />
             ) : (
                 <Loader />
             )}
-            {/*<button onClick={previousHandler}>Previous</button>
-            <button onClick={nextHandler}>Next</button>*/}
+            {/*<button onClick={previousHandler}>Previous</button>*/}
+            <button onClick={nextHandler}>Next</button>
         </Container>
     );
 };

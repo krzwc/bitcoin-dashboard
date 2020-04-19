@@ -1,6 +1,6 @@
 .container {
   @include center;
   flex-direction: column;
-  flex: 1;
   background: transparent;
+  overflow: auto;
 }
