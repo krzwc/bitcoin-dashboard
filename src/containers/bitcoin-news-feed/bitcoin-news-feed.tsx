@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, SyntheticEvent } from 'react';
+import React, { useEffect, useState, useRef /*, SyntheticEvent*/ } from 'react';
 import NewsFeed from '../../components/news-feed';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
@@ -10,10 +10,9 @@ import { newsDataFormatter } from '../../utils/formatter';
 import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
 import Loader from '../../components/loader';
-// import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 export interface State {
-    current: string;
     count: number;
     next: string;
     previous: string;
@@ -21,7 +20,6 @@ export interface State {
 }
 
 const initialState: Map<string, State[keyof State]> = Map({
-    current: ENDPOINTS.NEWS,
     count: null,
     next: null,
     previous: null,
@@ -30,55 +28,36 @@ const initialState: Map<string, State[keyof State]> = Map({
 
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [state, setState] = useState(initialState);
+    const [url, setUrl] = useState(ENDPOINTS.NEWS);
 
-    const [fetchingResult, fetchingError] = useFetch((state.toJS() as State).current, newsDataFormatter);
-
-    const bottomBoundaryRef = useRef<HTMLDivElement>(null);
-    // useInfiniteScroll(bottomBoundaryRef, setState, state.set('current', state.get('next')));
+    const [fetchingResult, fetchingError] = useFetch(url, newsDataFormatter);
 
     useEffect(() => {
-        if (!isNull(fetchingResult) && get(state.toJS(), ['results']).length <= 40) {
-            const convertedFetchingResult = {
-                // ...((fetchingResult as unknown) as State),
-                current: state.get('current'),
-                count: fetchingResult.count,
-                results: [...(state.get('results') as NewsItem[]), ...fetchingResult.results],
-                next: ((fetchingResult as unknown) as State).next
-                    ? convertURL(((fetchingResult as unknown) as State).next)
-                    : null,
-                previous: ((fetchingResult as unknown) as State).previous
-                    ? convertURL(((fetchingResult as unknown) as State).previous)
-                    : null,
-            };
-
-            /*setState(state.merge(convertedFetchingResult));*/
-            setState(Map(convertedFetchingResult));
+        if (!isNull(fetchingResult)) {
+            setState((currentState) =>
+                currentState.merge({
+                    count: fetchingResult.count,
+                    results: [...get(currentState.toJS(), ['results']), ...fetchingResult.results],
+                    next: fetchingResult.next && convertURL(fetchingResult.next),
+                    previous: fetchingResult.previous && convertURL(fetchingResult.previous),
+                }),
+            );
         }
     }, [fetchingResult]);
 
-    /*const previousHandler = (e: SyntheticEvent) => {
-        e.stopPropagation();
-        setState(state.set('current', state.get('previous')));
-    };*/
+    const bottomBoundaryRef = useRef<HTMLDivElement>(null);
 
-    const nextHandler = (e: SyntheticEvent) => {
-        e.stopPropagation();
-        setState(state.set('current', state.get('next')));
-    };
+    useInfiniteScroll(bottomBoundaryRef, setUrl, get(state.toJS(), ['next']));
 
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
             <h1>News</h1>
-            {console.log(get(state.toJS(), ['results']))}
-            {console.log(get(state.toJS(), ['results']).length)}
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (
-                <NewsFeed results={(get(state.toJS(), ['results']) as unknown) as NewsItem[]} />
+                <NewsFeed results={get(state.toJS(), ['results'])} />
             ) : (
                 <Loader />
             )}
-            {/*<button onClick={previousHandler}>Previous</button>*/}
-            <button onClick={nextHandler}>Next</button>
         </Container>
     );
 };

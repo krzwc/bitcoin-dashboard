@@ -1,28 +1,28 @@
 // credit: https://www.smashingmagazine.com/2020/03/infinite-scroll-lazy-image-loading-react/
 
 import { useCallback, useEffect, RefObject, Dispatch, SetStateAction } from 'react';
-import { State } from '../../containers/bitcoin-news-feed/bitcoin-news-feed';
-import { Map } from 'immutable';
-
-type SetState = Dispatch<SetStateAction<Map<string, State[keyof State]>>>;
+import { isNull } from 'lodash-es';
 
 const useInfiniteScroll = (
     scrollRef: RefObject<HTMLDivElement>,
-    setState: SetState,
-    state: Map<string, State[keyof State]>,
+    setState: Dispatch<SetStateAction<string>>,
+    state: string,
 ) => {
     const scrollObserver = useCallback(
         (node) => {
-            new IntersectionObserver((entries) => {
+            const intObs = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.intersectionRatio > 0) {
-                        // setState(state);
-                        // console.log(entry.intersectionRatio);
+                        if (!isNull(state)) {
+                            setState(state);
+                            intObs.unobserve(node);
+                        }
                     }
                 });
-            }).observe(node);
+            });
+            intObs.observe(node);
         },
-        [state],
+        [setState, state],
     );
     useEffect(() => {
         if (scrollRef.current) {

@@ -9,8 +9,10 @@ interface ContainerProps {
 const Container = forwardRef(({ children, width, height }: ContainerProps, ref?: RefObject<HTMLDivElement>) => {
     return (
         <div className="container" style={{ width, height }}>
-            {children}
-            <div style={{ backgroundColor: 'red', width, height: '1px' }} ref={ref} />
+            <div className="wrapper">
+                {children}
+                {ref && <div style={{ width, height: '1px' }} ref={ref} />}
+            </div>
         </div>
     );
 });
