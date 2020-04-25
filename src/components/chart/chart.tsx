@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { LineChart, Line, XAxis, YAxis, ReferenceLine, Tooltip } from 'recharts';
+import { getRefLines, dataBoundries } from './helpers';
 
 export interface ChartPropsItem {
     time: string;
@@ -15,12 +16,13 @@ interface ChartProps {
 }
 
 const Chart = ({ data, width, height, xAxisFormatter }: ChartProps) => {
-    const refLinesArr = [6000, 6500, 7000, 7500]
     const refLines =
         data.length === 1 ? (
             <ReferenceLine y={data[0].USD} stroke="lightgrey" />
         ) : (
-            refLinesArr.map((refLine) => <ReferenceLine key={refLine} y={refLine} label={refLine} stroke="lightgrey" />)
+            getRefLines(dataBoundries(data)).map((refLine) => {
+                return <ReferenceLine key={refLine} y={refLine} label={refLine} stroke="lightgrey" />;
+            })
         );
 
     return (
@@ -31,11 +33,9 @@ const Chart = ({ data, width, height, xAxisFormatter }: ChartProps) => {
             data={data}
             margin={{ top: 20, right: 50, bottom: 20 }}
         >
-            {/*<CartesianGrid horizontal={true} vertical={false} />*/}
             {refLines}
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
-            <YAxis type="number" domain={['dataMin-100', 'dataMax+100']} hide={true} />
-
+            <YAxis type="number" domain={[(dataMin) => (dataMin * 0.95), (dataMax) => (dataMax * 1.05)]} hide={true} />
             <Tooltip />
             <Line type="linear" dataKey="USD" stroke="#8884d8" dot={false} />
         </LineChart>
