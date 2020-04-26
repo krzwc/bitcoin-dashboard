@@ -10,6 +10,8 @@ import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
 import Loader from '../../components/loader';
 import { isEmpty } from 'lodash-es';
+import { getRefLines, dataBoundries } from './helpers';
+import { ReferenceLine } from 'recharts';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
@@ -17,6 +19,11 @@ const formatXAxis = (tickItem: string) => {
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [result, error] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
+    const refLines =
+        !isEmpty(result) &&
+        getRefLines(dataBoundries(result)).map((refLine) => {
+            return <ReferenceLine key={refLine} y={refLine} label={refLine} stroke="lightgrey" />;
+        });
 
     return (
         <Container>
@@ -28,6 +35,7 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                     width={width}
                     height={height}
                     xAxisFormatter={formatXAxis}
+                    refLines={refLines}
                 />
             ) : (
                 <Loader />
