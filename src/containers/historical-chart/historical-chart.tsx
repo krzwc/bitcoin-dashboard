@@ -11,11 +11,15 @@ import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
 import Loader from '../../components/loader';
 import { isEmpty } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
-import { ReferenceLine } from 'recharts';
+import { AxisDomain, ReferenceLine } from 'recharts';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
 };
+
+const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * 0.95;
+
+const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * 1.05;
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [result, error] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
@@ -36,6 +40,8 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                     height={height}
                     xAxisFormatter={formatXAxis}
                     refLines={refLines}
+                    yDomainMinGenerator={yDomainMinGenerator}
+                    yDomainMaxGenerator={yDomainMaxGenerator}
                 />
             ) : (
                 <Loader />
