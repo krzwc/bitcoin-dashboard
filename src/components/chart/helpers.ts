@@ -15,21 +15,17 @@ export const dataBoundries = (data: ChartPropsItem[]) => {
     return [firstOfFirst + tail(Math.floor(bounds[0])), firstOfSecond + tail(Math.floor(bounds[1]))];
 };
 
-const STEP = 4;
+const TOTAL_STEPS = 8;
+
+const rangeWithStep = (start: number, end: number, stepValue: number, steps: number) =>
+    Array(steps)
+        .fill(0)
+        .map((v, i) => start + i * stepValue);
 
 export const getRefLines = (arr: string[]) => {
     const start = Number(arr[0]);
     const end = Number(arr[arr.length - 1]);
-    const step = (end - start) / STEP;
-    let nextIndex = 1;
-    const result = [start];
+    const stepValue = (end - start) / TOTAL_STEPS;
 
-    while (result[nextIndex - 1] + step < end) {
-        result.splice(nextIndex, 0, result[nextIndex - 1] + step);
-
-        nextIndex++;
-    }
-    result.push(end);
-
-    return result;
+    return [...rangeWithStep(start, end, stepValue, TOTAL_STEPS), end];
 };

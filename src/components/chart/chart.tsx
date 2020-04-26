@@ -17,8 +17,8 @@ interface ChartProps {
 
 const Chart = ({ data, width, height, xAxisFormatter }: ChartProps) => {
     const refLines =
-        data.length === 1 ? (
-            <ReferenceLine y={data[0].USD} stroke="lightgrey" />
+        data.length < 10 ? (
+            <ReferenceLine />
         ) : (
             getRefLines(dataBoundries(data)).map((refLine) => {
                 return <ReferenceLine key={refLine} y={refLine} label={refLine} stroke="lightgrey" />;
@@ -35,6 +35,8 @@ const Chart = ({ data, width, height, xAxisFormatter }: ChartProps) => {
         >
             {refLines}
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
+
+            {/* TODO: Yaxis dla current musi być dynamiczny, musi byc przekazywany propsem */}
             <YAxis type="number" domain={[(dataMin) => (dataMin * 0.95), (dataMax) => (dataMax * 1.05)]} hide={true} />
             <Tooltip />
             <Line type="linear" dataKey="USD" stroke="#8884d8" dot={false} />
