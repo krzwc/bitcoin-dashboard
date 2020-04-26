@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { List } from 'immutable';
-import { isNull, isEmpty } from 'lodash-es';
+import { isNull, isEmpty, get } from 'lodash-es';
 import Chart from '../../components/chart';
 import { usePoll, useFetch } from '../../hooks';
 import { TOTAL_X_TICKS, POLLING_INTERVALS } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
 import { ENDPOINTS } from '../../utils/endpoint';
-import { currentDataFormatter } from '../../utils/formatter';
+import { currentDataFormatter, historicalDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
+import { ReferenceLine } from 'recharts';
 
 const initialState: List<ChartPropsItem> = List([]);
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem);
+};
+
+const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
+    const lastHistoricalUSD = !isEmpty(fetchingResult) && Number(get(fetchingResult.slice(-1).pop(), ['USD']));
+
+    return lastHistoricalUSD && <ReferenceLine y={lastHistoricalUSD} label={lastHistoricalUSD} stroke="lightgrey" />;
 };
 
 const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
@@ -27,6 +34,8 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
         currentDataFormatter,
     );
     const [fetchingResult, fetchingError] = useFetch(ENDPOINTS.CURRENT, currentDataFormatter);
+    const [historicalFetchingResult] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
+
     useEffect(() => {
         if (!isNull(pollingResult) && !isNull(pollingResult[0]) && !isNull(pollingResult[1])) {
             setChartData((data) => {
@@ -51,11 +60,18 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
 
     return (
         <Container>
-            <h1>Current: {!pollingLoading && pollingResult && pollingResult[1]}</h1>
+            {/*{console.log(!isEmpty(historicalFetchingResult) && Number(get(historicalFetchingResult.slice(-1).pop(), ['USD'])))}*/}
+            <h1>Current: {!pollingLoading && get(pollingResult, ['1'])}</h1>
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(chartData.toJS()) ? (
-                <Chart data={chartData.toJS()} width={width} height={height} xAxisFormatter={formatXAxis} />
+                <Chart
+                    data={chartData.toJS()}
+                    width={width}
+                    height={height}
+                    xAxisFormatter={formatXAxis}
+                    refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
+                />
             ) : (
                 <Loader />
             )}
