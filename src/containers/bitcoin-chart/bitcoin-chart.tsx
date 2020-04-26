@@ -59,8 +59,6 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             ) : (
                 <Loader />
             )}
-            {/*<button onClick={start as () => void}>Start</button>
-            <button onClick={stop as () => void}>Stop</button>*/}
         </Container>
     );
 };

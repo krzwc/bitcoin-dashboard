@@ -1,4 +1,5 @@
 import { ChartPropsItem } from '../../components/chart/chart';
+import { TOTAL_REFLINES } from '../../utils/consts';
 
 export const dataBoundries = (data: ChartPropsItem[]) => {
     const dataArr = data.map((dataItem) => Number(dataItem.USD));
@@ -14,8 +15,6 @@ export const dataBoundries = (data: ChartPropsItem[]) => {
 
     return [firstOfFirst + tail(Math.floor(bounds[0])), firstOfSecond + tail(Math.floor(bounds[1]))];
 };
-
-const TOTAL_REFLINES = 8;
 
 const rangeWithStep = (start: number, end: number, stepValue: number, steps: number) =>
     Array(steps)

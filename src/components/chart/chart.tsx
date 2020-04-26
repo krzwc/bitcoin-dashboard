@@ -11,7 +11,7 @@ interface ChartProps {
     data: ChartPropsItem[];
     width: number;
     height: number;
-    refLines?: JSX.Element[];
+    refLines?: JSX.Element[] | JSX.Element;
     xAxisFormatter(tickItem: string): string;
 }
 
