@@ -12,8 +12,8 @@ interface ChartProps {
     width: number;
     height: number;
     refLines?: JSX.Element[] | JSX.Element;
-    yDomainMinGenerator?(dataMin: number): AxisDomain;
-    yDomainMaxGenerator?(dataMin: number): AxisDomain;
+    yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain);
+    yDomainMaxGenerator?: AxisDomain | ((dataMax: number) => AxisDomain);
     xAxisFormatter(tickItem: string): string;
 }
 
@@ -36,8 +36,6 @@ const Chart = ({
         >
             {refLines}
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
-
-            {/* TODO: Yaxis dla current musi być dynamiczny, musi byc przekazywany propsem */}
             <YAxis type="number" domain={[yDomainMinGenerator, yDomainMaxGenerator]} hide={true} />
             <Tooltip />
             <Line type="linear" dataKey="USD" stroke="#8884d8" dot={false} />

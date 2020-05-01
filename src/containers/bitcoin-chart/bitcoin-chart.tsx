@@ -12,13 +12,20 @@ import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
-import { ReferenceLine } from 'recharts';
+import { /*AxisDomain,*/ ReferenceLine } from 'recharts';
 
 const initialState: List<ChartPropsItem> = List([]);
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem);
 };
+
+// const yDomainMinGenerator = (histricalFetchingResult, currentFetchingResult) => {
+//
+//     return (dataMin: number): AxisDomain => dataMin * 0.95;
+// }
+//
+// const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * 1.05;
 
 const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
     const lastHistoricalUSD = !isEmpty(fetchingResult) && Number(get(fetchingResult.slice(-1).pop(), ['USD']));
@@ -71,6 +78,8 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                     height={height}
                     xAxisFormatter={formatXAxis}
                     refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
+                    yDomainMinGenerator="auto"
+                    yDomainMaxGenerator="auto"
                 />
             ) : (
                 <Loader />
