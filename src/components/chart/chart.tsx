@@ -12,8 +12,8 @@ interface ChartProps {
     width: number;
     height: number;
     refLines?: JSX.Element[] | JSX.Element;
-    yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain);
-    yDomainMaxGenerator?: AxisDomain | ((dataMax: number) => AxisDomain);
+    yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain) | number;
+    yDomainMaxGenerator?: AxisDomain | ((dataMax: number) => AxisDomain) | number;
     xAxisFormatter(tickItem: string): string;
 }
 

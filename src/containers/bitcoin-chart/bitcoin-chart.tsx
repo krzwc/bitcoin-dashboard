@@ -20,12 +20,17 @@ const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem);
 };
 
-// const yDomainMinGenerator = (histricalFetchingResult, currentFetchingResult) => {
-//
-//     return (dataMin: number): AxisDomain => dataMin * 0.95;
-// }
-//
-// const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * 1.05;
+const yDomainMinGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
+    return historicalFetchingResult > currentFetchingResult
+        ? currentFetchingResult * 0.95
+        : historicalFetchingResult * 0.95;
+};
+
+const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
+    return historicalFetchingResult > currentFetchingResult
+        ? historicalFetchingResult * 1.05
+        : currentFetchingResult * 1.05;
+};
 
 const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
     const lastHistoricalUSD = !isEmpty(fetchingResult) && Number(get(fetchingResult.slice(-1).pop(), ['USD']));
@@ -67,20 +72,28 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
 
     return (
         <Container>
-            {/*{console.log(!isEmpty(historicalFetchingResult) && Number(get(historicalFetchingResult.slice(-1).pop(), ['USD'])))}*/}
+            {/*TODO: nie używac geta do tablicy*/}
             <h1>Current: {!pollingLoading && get(pollingResult, ['1'])}</h1>
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
-            {!isEmpty(chartData.toJS()) ? (
-                <Chart
-                    data={chartData.toJS()}
-                    width={width}
-                    height={height}
-                    xAxisFormatter={formatXAxis}
-                    refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
-                    yDomainMinGenerator="auto"
-                    yDomainMaxGenerator="auto"
-                />
+            {!isEmpty(chartData.toJS()) && !isEmpty(historicalFetchingResult) ? (
+                <>
+                    <Chart
+                        data={chartData.toJS()}
+                        width={width}
+                        height={height}
+                        xAxisFormatter={formatXAxis}
+                        refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
+                        yDomainMinGenerator={yDomainMinGenerator(
+                            get(historicalFetchingResult.slice(-1)[0], 'USD'),
+                            get(chartData.toJS(), '0.USD'),
+                        )}
+                        yDomainMaxGenerator={yDomainMaxGenerator(
+                            get(historicalFetchingResult.slice(-1)[0], 'USD'),
+                            get(chartData.toJS(), '0.USD'),
+                        )}
+                    />
+                </>
             ) : (
                 <Loader />
             )}
