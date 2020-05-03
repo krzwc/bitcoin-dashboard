@@ -12,6 +12,7 @@ interface ChartProps {
     width: number;
     height: number;
     refLines?: JSX.Element[] | JSX.Element;
+    stroke?: string;
     yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain) | number;
     yDomainMaxGenerator?: AxisDomain | ((dataMax: number) => AxisDomain) | number;
     xAxisFormatter(tickItem: string): string;
@@ -25,6 +26,7 @@ const Chart = ({
     xAxisFormatter,
     yDomainMinGenerator,
     yDomainMaxGenerator,
+    stroke,
 }: ChartProps) => {
     return (
         <LineChart
@@ -38,7 +40,12 @@ const Chart = ({
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
             <YAxis type="number" domain={[yDomainMinGenerator, yDomainMaxGenerator]} hide={true} />
             <Tooltip />
-            <Line type="linear" dataKey="USD" stroke="#8884d8" dot={false} />
+            <Line
+                type="linear"
+                dataKey="USD"
+                stroke={stroke ? stroke : '#8884d8'}
+                dot={false}
+            />
         </LineChart>
     );
 };
