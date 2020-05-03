@@ -12,14 +12,15 @@ import Loader from '../../components/loader';
 import { isEmpty } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
 import { AxisDomain, ReferenceLine } from 'recharts';
+import { DOMAIN_FACTOR } from '../../utils/consts';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
 };
 
-const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * 0.95;
+const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * DOMAIN_FACTOR.MIN;
 
-const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * 1.05;
+const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * DOMAIN_FACTOR.MAX;
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [result, error] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);

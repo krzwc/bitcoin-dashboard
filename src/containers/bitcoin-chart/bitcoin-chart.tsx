@@ -12,7 +12,8 @@ import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
-import { /*AxisDomain,*/ ReferenceLine } from 'recharts';
+import { ReferenceLine } from 'recharts';
+import { DOMAIN_FACTOR } from '../../utils/consts';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -22,14 +23,14 @@ const formatXAxis = (tickItem: string) => {
 
 const yDomainMinGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
     return historicalFetchingResult > currentFetchingResult
-        ? currentFetchingResult * 0.95
-        : historicalFetchingResult * 0.95;
+        ? currentFetchingResult * DOMAIN_FACTOR.MIN
+        : historicalFetchingResult * DOMAIN_FACTOR.MIN;
 };
 
 const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
     return historicalFetchingResult > currentFetchingResult
-        ? historicalFetchingResult * 1.05
-        : currentFetchingResult * 1.05;
+        ? historicalFetchingResult * DOMAIN_FACTOR.MAX
+        : currentFetchingResult * DOMAIN_FACTOR.MAX;
 };
 
 const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
