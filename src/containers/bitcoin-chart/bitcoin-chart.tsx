@@ -20,16 +20,10 @@ const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem);
 };
 
-const yDomainMinGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
+const domainGenerator = (historicalFetchingResult: number, currentFetchingResult: number, factor: number) => {
     return historicalFetchingResult > currentFetchingResult
-        ? currentFetchingResult * DOMAIN_FACTOR.MIN
-        : historicalFetchingResult * DOMAIN_FACTOR.MIN;
-};
-
-const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
-    return historicalFetchingResult > currentFetchingResult
-        ? historicalFetchingResult * DOMAIN_FACTOR.MAX
-        : currentFetchingResult * DOMAIN_FACTOR.MAX;
+        ? currentFetchingResult * factor
+        : historicalFetchingResult * factor;
 };
 
 const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
@@ -96,13 +90,15 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                         height={height}
                         xAxisFormatter={formatXAxis}
                         refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
-                        yDomainMinGenerator={yDomainMinGenerator(
+                        yDomainMinGenerator={domainGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
+                            DOMAIN_FACTOR.MIN,
                         )}
-                        yDomainMaxGenerator={yDomainMaxGenerator(
+                        yDomainMaxGenerator={domainGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
+                            DOMAIN_FACTOR.MAX,
                         )}
                         stroke={`${greenOrRed(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
