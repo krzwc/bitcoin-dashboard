@@ -15,7 +15,7 @@ interface ChartProps {
     stroke?: string;
     yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain) | number;
     yDomainMaxGenerator?: AxisDomain | ((dataMax: number) => AxisDomain) | number;
-    xAxisFormatter(tickItem: string): string;
+    xAxisFormatter?(tickItem: string): string;
 }
 
 const Chart = ({

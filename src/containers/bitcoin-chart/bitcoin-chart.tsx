@@ -16,8 +16,8 @@ import { ReferenceLine } from 'recharts';
 
 const initialState: List<ChartPropsItem> = List([]);
 
-const formatXAxis = (tickItem: string) => {
-    return convertTimestamp(tickItem);
+const formatResult = (result: List<ChartPropsItem>): ChartPropsItem[] => {
+    return result.toJS().map((resultItem) => ({ ...resultItem, time: convertTimestamp(resultItem.time) }));
 };
 
 const domainGenerator = (historicalFetchingResult: number, currentFetchingResult: number, factor: number) => {
@@ -85,10 +85,9 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                         Current: {!pollingLoading && get(pollingResult, ['1'])}
                     </h1>
                     <Chart
-                        data={chartData.toJS()}
+                        data={formatResult(chartData)}
                         width={width}
                         height={height}
-                        xAxisFormatter={formatXAxis}
                         refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
                         yDomainMinGenerator={domainGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
