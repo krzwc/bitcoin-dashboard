@@ -82,7 +82,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                             )}`,
                         }}
                     >
-                        Current: {!pollingLoading && get(pollingResult, ['1'])}
+                        Current: {!pollingLoading && get(fetchingResult, ['1'])}
                     </h1>
                     <Chart
                         data={formatResult(chartData)}
