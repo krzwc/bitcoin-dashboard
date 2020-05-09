@@ -40,12 +40,7 @@ const Chart = ({
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
             <YAxis type="number" domain={[yDomainMinGenerator, yDomainMaxGenerator]} hide={true} />
             <Tooltip />
-            <Line
-                type="linear"
-                dataKey="USD"
-                stroke={stroke ? stroke : '#8884d8'}
-                dot={false}
-            />
+            <Line type="linear" dataKey="USD" stroke={stroke ? stroke : '#8884d8'} dot={false} />
         </LineChart>
     );
 };

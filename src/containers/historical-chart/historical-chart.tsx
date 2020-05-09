@@ -11,7 +11,7 @@ import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
 import Loader from '../../components/loader';
 import { isEmpty } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
-import { AxisDomain, ReferenceLine } from 'recharts';
+import { AxisDomain, ReferenceLine, Label } from 'recharts';
 import { DOMAIN_FACTOR } from '../../utils/consts';
 
 const formatXAxis = (tickItem: string) => {
@@ -27,7 +27,15 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     const refLines =
         !isEmpty(result) &&
         getRefLines(dataBoundries(result)).map((refLine) => {
-            return <ReferenceLine key={refLine} y={refLine} label={refLine} stroke="lightgrey" />;
+            return (
+                <ReferenceLine
+                    key={refLine}
+                    y={refLine}
+                    stroke="lightgrey"
+                >
+                    <Label value={refLine} position="insideLeft" />
+                </ReferenceLine>
+            );
         });
 
     return (
