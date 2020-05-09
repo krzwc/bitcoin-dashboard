@@ -12,7 +12,7 @@ import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
-import { ReferenceLine } from 'recharts';
+import { Label, ReferenceLine } from 'recharts';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -20,16 +20,28 @@ const formatResult = (result: List<ChartPropsItem>): ChartPropsItem[] => {
     return result.toJS().map((resultItem) => ({ ...resultItem, time: convertTimestamp(resultItem.time) }));
 };
 
-const domainGenerator = (historicalFetchingResult: number, currentFetchingResult: number, factor: number) => {
+const yDomainMinGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
     return historicalFetchingResult > currentFetchingResult
-        ? currentFetchingResult * factor
-        : historicalFetchingResult * factor;
+        ? currentFetchingResult * DOMAIN_FACTOR.MIN
+        : historicalFetchingResult * DOMAIN_FACTOR.MIN;
+};
+
+const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
+    return historicalFetchingResult > currentFetchingResult
+        ? historicalFetchingResult * DOMAIN_FACTOR.MAX
+        : currentFetchingResult * DOMAIN_FACTOR.MAX;
 };
 
 const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) => {
     const lastHistoricalUSD = !isEmpty(fetchingResult) && Number(get(fetchingResult.slice(-1).pop(), ['USD']));
 
-    return lastHistoricalUSD && <ReferenceLine y={lastHistoricalUSD} label={lastHistoricalUSD} stroke="lightgrey" />;
+    return (
+        lastHistoricalUSD && (
+            <ReferenceLine y={lastHistoricalUSD} stroke="lightgrey">
+                <Label value={lastHistoricalUSD} position="insideLeft" />
+            </ReferenceLine>
+        )
+    );
 };
 
 const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
@@ -88,15 +100,13 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                         width={width}
                         height={height}
                         refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
-                        yDomainMinGenerator={domainGenerator(
+                        yDomainMinGenerator={yDomainMinGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
-                            DOMAIN_FACTOR.MIN,
                         )}
-                        yDomainMaxGenerator={domainGenerator(
+                        yDomainMaxGenerator={yDomainMaxGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
-                            DOMAIN_FACTOR.MAX,
                         )}
                         stroke={`${greenOrRed(
                             get(historicalFetchingResult.slice(-1), '0.USD'),

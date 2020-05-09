@@ -28,11 +28,7 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
         !isEmpty(result) &&
         getRefLines(dataBoundries(result)).map((refLine) => {
             return (
-                <ReferenceLine
-                    key={refLine}
-                    y={refLine}
-                    stroke="lightgrey"
-                >
+                <ReferenceLine key={refLine} y={refLine} stroke="lightgrey">
                     <Label value={refLine} position="insideLeft" />
                 </ReferenceLine>
             );
