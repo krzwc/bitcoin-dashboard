@@ -73,7 +73,6 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(chartData.toJS()) && !isEmpty(historicalFetchingResult) ? (
                 <>
-                    {/*TODO: nie używac geta do tablicy*/}
                     <h1
                         style={{
                             color: `${greenOrRed(
@@ -82,7 +81,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                             )}`,
                         }}
                     >
-                        Current: {!pollingLoading && get(fetchingResult, ['1'])}
+                        Current: {!pollingLoading && fetchingResult[1]}
                     </h1>
                     <Chart
                         data={formatResult(chartData)}
