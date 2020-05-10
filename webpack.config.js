@@ -25,15 +25,19 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test:/\.s?css$/,
-                use:['style-loader', 'css-loader', 'sass-loader']
+                test: /\.s?css$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|jpg|gif)$/,
                 use: [
                     'file-loader'
                 ]
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
             }
         ]
-    }
-}
+    },
+};

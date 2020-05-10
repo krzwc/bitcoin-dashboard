@@ -11,6 +11,7 @@ import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
 import Loader from '../../components/loader';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import DownArrow from '../../components/down-arrow';
 
 export interface State {
     count: number;
@@ -51,6 +52,7 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
 
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
+            <DownArrow className={get(state.toJS(), ['next']) ? 'bounce' : 'hide'} />
             <h1>News</h1>
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (
