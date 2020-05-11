@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import { isNull, isEmpty, get } from 'lodash-es';
 import Chart from '../../components/chart';
 import { usePoll, useFetch } from '../../hooks';
-import { TOTAL_X_TICKS, POLLING_INTERVALS, DOMAIN_FACTOR } from '../../utils/consts';
+import { TOTAL_X_TICKS, POLLING_INTERVALS, DOMAIN_FACTOR, MS_TO_S_FACTOR } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
 import { ENDPOINTS } from '../../utils/endpoint';
@@ -13,6 +13,7 @@ import { convertTimestamp } from '../../utils/timeservice';
 import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
 import { Label, ReferenceLine } from 'recharts';
+import moment from 'moment';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -72,6 +73,20 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     useEffect(() => {
         if (!isEmpty(fetchingResult)) {
             setChartData((data) => data.push({ time: fetchingResult[0], USD: fetchingResult[1] }));
+            // TODO: doesn't work yet - thin of sth else than pushing
+            if (chartData.toJS().length < TOTAL_X_TICKS) {
+                for (let i = 1; i < TOTAL_X_TICKS; i++) {
+                    setChartData((data) =>
+                        data.push({
+                            time: moment
+                                .utc(fetchingResult[0])
+                                .add((i * POLLING_INTERVALS.CHART) / MS_TO_S_FACTOR, 'seconds')
+                                .format(),
+                            USD: null,
+                        }),
+                    );
+                }
+            }
         }
     }, [fetchingResult]);
 
