@@ -14,6 +14,7 @@ import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
 import { Label, ReferenceLine } from 'recharts';
 import moment from 'moment';
+import { rangeWithStep } from '../../utils/helpers';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -59,34 +60,46 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [historicalFetchingResult] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
 
     useEffect(() => {
+        if (chartData.toJS().length < TOTAL_X_TICKS) {
+            rangeWithStep(0, 1, TOTAL_X_TICKS).map((next, index) =>
+                setChartData((data) =>
+                    data.push({
+                        time: moment()
+                            .utc()
+                            .add((index * POLLING_INTERVALS.CHART) / MS_TO_S_FACTOR, 'seconds')
+                            .format(),
+                        USD: null,
+                    }),
+                ),
+            );
+        }
+    }, []);
+
+    useEffect(() => {
         if (!isNull(pollingResult) && !isNull(pollingResult[0]) && !isNull(pollingResult[1])) {
             setChartData((data) => {
-                if (data.size >= TOTAL_X_TICKS) {
+                if (data.some((dataItem) => dataItem.USD === null)) {
+                    data.set(
+                        data.findIndex((dataItem) => dataItem.USD === null),
+                        { time: pollingResult[0], USD: pollingResult[1] },
+                    );
+                } else if (data.size >= TOTAL_X_TICKS) {
                     return data.shift().push({ time: pollingResult[0], USD: pollingResult[1] });
                 }
 
-                return data.push({ time: pollingResult[0], USD: pollingResult[1] });
+                /*return data.push({ time: pollingResult[0], USD: pollingResult[1] });*/
             });
         }
     }, [pollingResult]);
 
     useEffect(() => {
         if (!isEmpty(fetchingResult)) {
-            setChartData((data) => data.push({ time: fetchingResult[0], USD: fetchingResult[1] }));
-            // TODO: doesn't work yet - thin of sth else than pushing
-            if (chartData.toJS().length < TOTAL_X_TICKS) {
-                for (let i = 1; i < TOTAL_X_TICKS; i++) {
-                    setChartData((data) =>
-                        data.push({
-                            time: moment
-                                .utc(fetchingResult[0])
-                                .add((i * POLLING_INTERVALS.CHART) / MS_TO_S_FACTOR, 'seconds')
-                                .format(),
-                            USD: null,
-                        }),
-                    );
-                }
-            }
+            setChartData((data) =>
+                data.set(
+                    data.findIndex((dataItem) => dataItem.USD === null),
+                    { time: fetchingResult[0], USD: fetchingResult[1] },
+                ),
+            );
         }
     }, [fetchingResult]);
 
@@ -98,7 +111,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
         <Container>
             {pollingError && <p className="error">{pollingError}</p>}
             {fetchingError && <p className="error">{fetchingError}</p>}
-            {!isEmpty(chartData.toJS()) && !isEmpty(historicalFetchingResult) ? (
+            {!isEmpty(chartData.toJS()) && !isEmpty(fetchingResult) && !isEmpty(historicalFetchingResult) ? (
                 <>
                     <h1
                         style={{
