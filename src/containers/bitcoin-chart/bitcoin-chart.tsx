@@ -79,15 +79,13 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
         if (!isNull(pollingResult) && !isNull(pollingResult[0]) && !isNull(pollingResult[1])) {
             setChartData((data) => {
                 if (data.some((dataItem) => dataItem.USD === null)) {
-                    data.set(
+                    return data.set(
                         data.findIndex((dataItem) => dataItem.USD === null),
                         { time: pollingResult[0], USD: pollingResult[1] },
                     );
                 } else if (data.size >= TOTAL_X_TICKS) {
                     return data.shift().push({ time: pollingResult[0], USD: pollingResult[1] });
                 }
-
-                /*return data.push({ time: pollingResult[0], USD: pollingResult[1] });*/
             });
         }
     }, [pollingResult]);
