@@ -4,8 +4,9 @@ import initialState from '../initialState';
 
 import useThunkReducer from '../useThunkReducer';
 import fetchData from './fetchData';
+import { Response } from '../../types/interfaces';
 
-const useFetch = (endpoint: string, formatter: (response: any) => {}) => {
+const useFetch = (endpoint: string, formatter: (response: Response) => {}) => {
     const [state, enhancedDispatch] = useThunkReducer(reducer, initialState);
 
     useEffect(() => {

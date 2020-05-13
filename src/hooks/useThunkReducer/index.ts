@@ -1,3 +1,1 @@
-import useThunkReducer from './useThunkReducer';
-
-export default useThunkReducer;
+export { default } from './useThunkReducer';

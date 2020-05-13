@@ -1,10 +1,11 @@
 import ACTIONS from '../actions';
 import { EnhancedDispatch } from '../interfaces';
+import { Response } from '../../types/interfaces';
 
 interface Fetch {
     dispatch: EnhancedDispatch;
     endpoint: string;
-    formatter(response: any): {};
+    formatter(response: Response): {};
 }
 
 const fetchData = ({ dispatch, endpoint, formatter }: Fetch): void => {

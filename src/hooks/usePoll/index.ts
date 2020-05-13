@@ -1,3 +1,1 @@
-import usePoll from './usePoll';
-
-export default usePoll;
+export { default } from './usePoll';
