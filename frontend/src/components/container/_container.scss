@@ -1,0 +1,6 @@
+.container {
+  @include center;
+  flex-direction: column;
+  background: transparent;
+  padding: 10px;
+}

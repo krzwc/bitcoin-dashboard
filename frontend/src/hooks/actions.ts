@@ -1,0 +1,8 @@
+enum ACTIONS {
+    FETCHING = 'FETCHING',
+    POLLING = 'POLLING',
+    RESPONSE_COMPLETE = 'RESPONSE_COMPLETE',
+    ERROR = 'ERROR',
+}
+
+export default ACTIONS;

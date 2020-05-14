@@ -1,0 +1,28 @@
+.react-draggable-transparent-selection {
+
+  *::selection {
+    color: inherit;
+  }
+}
+
+.dashboard {
+  &.react-grid-layout {
+    transition: none;
+  }
+
+  .react-grid-item.cssTransforms {
+    transition-property: none;
+  }
+
+  .react-resizable-handle {
+    z-index: 2;
+    /*&::after {
+      border-bottom-color: black;
+      border-right-color: black;
+    }*/
+  }
+
+  .react-grid-item {
+    @include center;
+  }
+}
