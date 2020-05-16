@@ -1,7 +1,9 @@
-export enum ENDPOINTS {
-    CURRENT = 'https://api.coindesk.com/v1/bpi/currentprice.json',
-    HISTORICAL = 'https://api.coindesk.com/v1/bpi/historical/close.json',
-    NEWS = 'http://localhost:8082/news',
+const BASEURL = 'http://localhost:8082';
+
+export const ENDPOINTS = {
+    CURRENT: BASEURL + '/current',
+    HISTORICAL: BASEURL + '/historical',
+    NEWS: BASEURL + '/news',
 }
 
 export const convertURL = (url: string): string => {

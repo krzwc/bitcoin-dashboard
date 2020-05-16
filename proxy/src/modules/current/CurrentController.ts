@@ -6,7 +6,7 @@ import { URLS } from '../../common/consts/targetUrls';
 class NewsController implements Controller {
   public router = express.Router();
 
-  public path = '/news';
+  public path = '/current';
 
   constructor() {
     this.initializeRoutes();
@@ -19,13 +19,12 @@ class NewsController implements Controller {
   }
 
   private fetchNews = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
-    const url = request.query.page ? `${URLS.NEWS}&page=${request.query.page}` : URLS.NEWS;
     try {
-      axios.get(url)
-          .then((data) => {
-            return response.status(200).send(data.data)
-          })
-          .catch(err => response.send(err));
+      axios.get(URLS.CURRENT)
+                .then((data) => {
+                  return response.status(200).send(data.data)
+                })
+                .catch(err => response.send(err));
     } catch (err) {
       console.error('GG', err);
     }
