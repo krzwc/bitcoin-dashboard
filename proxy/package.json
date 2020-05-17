@@ -4,8 +4,7 @@
   "description": "proxy-server",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "ts-node-dev server.ts",
+    "start": "ts-node-dev server.ts",
     "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {

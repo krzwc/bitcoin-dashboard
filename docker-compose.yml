@@ -1,0 +1,24 @@
+---
+version: "3"
+
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy/Dockerfile
+    volumes:
+      - ./proxy:/app
+    ports:
+      - "8082:8082"
+    command: npm run start
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - proxy
