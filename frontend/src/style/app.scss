@@ -1,7 +1,6 @@
+@import '../assets/fonts/Montserrat/montserrat.css';
+@import '../assets/fonts/Lato/lato.css';
 @import './mixins';
+@import './base';
 @import '../components/components';
 @import '../containers/containers';
-
-.container {
-    @include center;
-}
