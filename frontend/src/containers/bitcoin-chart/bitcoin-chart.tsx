@@ -15,6 +15,8 @@ import Loader from '../../components/loader';
 import { Label, ReferenceLine } from 'recharts';
 import moment from 'moment';
 import { rangeWithStep } from '../../utils/helpers';
+// @ts-ignore
+import theme from '../../style/_theme.scss';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -46,8 +48,11 @@ const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) =>
     );
 };
 
+/*const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
+    historicalFetchingResult > currentFetchingResult ? '#fc034e' : '#03fc84';*/
+
 const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
-    historicalFetchingResult > currentFetchingResult ? '#fc034e' : '#03fc84';
+    historicalFetchingResult > currentFetchingResult ? theme.RED : theme.GREEN;
 
 const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [chartData, setChartData] = useState(initialState);
