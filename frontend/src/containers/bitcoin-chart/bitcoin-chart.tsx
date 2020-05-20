@@ -41,15 +41,18 @@ const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) =>
 
     return (
         lastHistoricalUSD && (
-            <ReferenceLine y={lastHistoricalUSD} stroke="lightgrey">
-                <Label value={lastHistoricalUSD} position="insideLeft" />
+            <ReferenceLine y={lastHistoricalUSD} stroke={theme.LIGHT_GREY}>
+                <Label
+                    value={lastHistoricalUSD}
+                    position="insideLeft"
+                    stroke={theme.LIGHT_GREY}
+                    fill={theme.LIGHT_GREY}
+                    strokeWidth={0.5}
+                />
             </ReferenceLine>
         )
     );
 };
-
-/*const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
-    historicalFetchingResult > currentFetchingResult ? '#fc034e' : '#03fc84';*/
 
 const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
     historicalFetchingResult > currentFetchingResult ? theme.RED : theme.GREEN;

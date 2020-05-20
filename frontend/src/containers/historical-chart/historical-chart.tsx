@@ -13,6 +13,8 @@ import { isEmpty } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
 import { AxisDomain, ReferenceLine, Label } from 'recharts';
 import { DOMAIN_FACTOR } from '../../utils/consts';
+// @ts-ignore
+import theme from '../../style/_theme.scss';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
@@ -28,8 +30,14 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
         !isEmpty(result) &&
         getRefLines(dataBoundries(result)).map((refLine) => {
             return (
-                <ReferenceLine key={refLine} y={refLine} stroke="lightgrey">
-                    <Label value={refLine} position="insideLeft" />
+                <ReferenceLine key={refLine} y={refLine} stroke={theme.LIGHT_GREY}>
+                    <Label
+                        value={refLine}
+                        position="insideLeft"
+                        stroke={theme.LIGHT_GREY}
+                        fill={theme.LIGHT_GREY}
+                        strokeWidth={0.5}
+                    />
                 </ReferenceLine>
             );
         });

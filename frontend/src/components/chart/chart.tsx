@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { LineChart, Line, XAxis, YAxis, Tooltip, AxisDomain } from 'recharts';
+// @ts-ignore
+import theme from '../../style/_theme.scss';
 
 export interface ChartPropsItem {
     time: string;
@@ -37,10 +38,10 @@ const Chart = ({
             margin={{ top: 20, right: 50, bottom: 20 }}
         >
             {refLines}
-            <XAxis dataKey="time" tickFormatter={xAxisFormatter} />
+            <XAxis dataKey="time" tickFormatter={xAxisFormatter} stroke={theme.LIGHT_GREY} />
             <YAxis type="number" domain={[yDomainMinGenerator, yDomainMaxGenerator]} hide={true} />
             <Tooltip />
-            <Line type="linear" dataKey="USD" stroke={stroke ? stroke : '#8884d8'} dot={false} />
+            <Line type="linear" dataKey="USD" stroke={stroke ? stroke : theme.DARK} dot={false} strokeWidth={3} />
         </LineChart>
     );
 };
