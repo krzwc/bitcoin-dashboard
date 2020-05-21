@@ -53,6 +53,7 @@ const Dashboard: FunctionComponent<DashboardProps> = ({ gridItems }) => {
             className="dashboard"
             breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
             cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+            margin={[40, 100]}
             layouts={state.layouts}
             rowHeight={150}
             {...defaultProps}

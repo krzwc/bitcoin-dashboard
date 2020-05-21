@@ -1,12 +1,19 @@
 $FONT_WEIGHT_THIN: 300;
 $FONT_WEIGHT_NORMAL: 400;
-$FONT_WEIGHT_BOLD: 700;
+$FONT_WEIGHT_BOLD: 600;
 
 a, p, span, div, table, tr, td, h1, h2, h3, h4, h5, h6 {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
+  color: $FONT;
 }
 
 .container {
   @include center;
+}
+
+body {
+  background: $DARK_YELLOW;
+  background: linear-gradient(to top right, $DARK_YELLOW 0%, $LIGHT_YELLOW 100%);
+  padding: 20px;
 }

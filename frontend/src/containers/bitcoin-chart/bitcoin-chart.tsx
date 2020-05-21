@@ -45,8 +45,8 @@ const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) =>
                 <Label
                     value={lastHistoricalUSD}
                     position="insideLeft"
-                    stroke={theme.LIGHT_GREY}
-                    fill={theme.LIGHT_GREY}
+                    stroke={theme.MEDIUM_GREY}
+                    fill={theme.MEDIUM_GREY}
                     strokeWidth={0.5}
                 />
             </ReferenceLine>
@@ -120,15 +120,16 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             {!isEmpty(chartData.toJS()) && !isEmpty(fetchingResult) && !isEmpty(historicalFetchingResult) ? (
                 <>
                     <h1
-                        style={{
+                    /*style={{
                             color: `${greenOrRed(
                                 get(historicalFetchingResult.slice(-1), '0.USD'),
                                 get(chartData.toJS(), '0.USD'),
                             )}`,
-                        }}
+                        }}*/
                     >
-                        Current: {!pollingLoading && fetchingResult[1]}
+                        Current
                     </h1>
+                    <h3>{!pollingLoading && fetchingResult[1]}</h3>
                     <Chart
                         data={formatResult(chartData)}
                         width={width}

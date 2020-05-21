@@ -38,7 +38,7 @@ const Chart = ({
             margin={{ top: 20, right: 50, bottom: 20 }}
         >
             {refLines}
-            <XAxis dataKey="time" tickFormatter={xAxisFormatter} stroke={theme.LIGHT_GREY} />
+            <XAxis dataKey="time" tickFormatter={xAxisFormatter} stroke={theme.MEDIUM_GREY} />
             <YAxis type="number" domain={[yDomainMinGenerator, yDomainMaxGenerator]} hide={true} />
             <Tooltip />
             <Line type="linear" dataKey="USD" stroke={stroke ? stroke : theme.DARK} dot={false} strokeWidth={3} />

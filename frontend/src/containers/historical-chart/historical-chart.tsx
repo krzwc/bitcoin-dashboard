@@ -34,8 +34,8 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                     <Label
                         value={refLine}
                         position="insideLeft"
-                        stroke={theme.LIGHT_GREY}
-                        fill={theme.LIGHT_GREY}
+                        stroke={theme.MEDIUM_GREY}
+                        fill={theme.MEDIUM_GREY}
                         strokeWidth={0.5}
                     />
                 </ReferenceLine>
