@@ -53,7 +53,10 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
             <DownArrow className={get(state.toJS(), ['next']) ? 'bounce' : 'hide'} />
-            <h1>News</h1>
+            <div className="header">
+                <h1>News</h1>
+                <h3>placeholder</h3>
+            </div>
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (
                 <NewsFeed results={get(state.toJS(), ['results'])} />

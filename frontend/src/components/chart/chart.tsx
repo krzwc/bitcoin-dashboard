@@ -10,8 +10,8 @@ export interface ChartPropsItem {
 
 interface ChartProps {
     data: ChartPropsItem[];
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
     refLines?: JSX.Element[] | JSX.Element;
     stroke?: string;
     yDomainMinGenerator?: AxisDomain | ((dataMin: number) => AxisDomain) | number;

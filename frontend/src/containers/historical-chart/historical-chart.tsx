@@ -25,7 +25,7 @@ const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * DOMAIN_FA
 const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * DOMAIN_FACTOR.MAX;
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
-    const [result, error] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
+    const [result] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);
     const refLines =
         !isEmpty(result) &&
         getRefLines(dataBoundries(result)).map((refLine) => {
@@ -44,13 +44,15 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
 
     return (
         <Container>
-            <h1>Historical</h1>
-            {error && <p className="error">{error}</p>}
+            <div className="header">
+                <h1>Historical</h1>
+                <h3>placeholder</h3>
+            </div>
             {!isEmpty(result) ? (
                 <Chart
                     data={(result as unknown) as ChartPropsItem[]}
                     width={width}
-                    height={height}
+                    height={height - 100}
                     xAxisFormatter={formatXAxis}
                     refLines={refLines}
                     yDomainMinGenerator={yDomainMinGenerator}

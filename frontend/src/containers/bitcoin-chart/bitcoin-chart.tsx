@@ -119,21 +119,23 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(chartData.toJS()) && !isEmpty(fetchingResult) && !isEmpty(historicalFetchingResult) ? (
                 <>
-                    <h1
-                    /*style={{
-                            color: `${greenOrRed(
-                                get(historicalFetchingResult.slice(-1), '0.USD'),
-                                get(chartData.toJS(), '0.USD'),
-                            )}`,
-                        }}*/
-                    >
-                        Current
-                    </h1>
-                    <h3>{!pollingLoading && fetchingResult[1]}</h3>
+                    <div className="header">
+                        <h1
+                        /*style={{
+                                    color: `${greenOrRed(
+                                        get(historicalFetchingResult.slice(-1), '0.USD'),
+                                        get(chartData.toJS(), '0.USD'),
+                                    )}`,
+                                }}*/
+                        >
+                            Current
+                        </h1>
+                        <h3>{!pollingLoading && fetchingResult[1]}</h3>
+                    </div>
                     <Chart
                         data={formatResult(chartData)}
                         width={width}
-                        height={height}
+                        height={height - 100}
                         refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
                         yDomainMinGenerator={yDomainMinGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),

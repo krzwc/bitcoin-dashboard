@@ -8,12 +8,9 @@ a, p, span, div, table, tr, td, h1, h2, h3, h4, h5, h6 {
   color: $FONT;
 }
 
-.container {
-  @include center;
-}
-
 body {
   background: $DARK_YELLOW;
   background: linear-gradient(to top right, $DARK_YELLOW 0%, $LIGHT_YELLOW 100%);
-  padding: 20px;
+  padding: 10px;
+  box-sizing: border-box;
 }
