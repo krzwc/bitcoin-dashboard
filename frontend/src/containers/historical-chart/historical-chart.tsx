@@ -9,12 +9,15 @@ import { historicalDataFormatter } from '../../utils/formatter';
 import { ResizeDetectorChartProps } from '../interfaces';
 import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
 import Loader from '../../components/loader';
-import { isEmpty } from 'lodash-es';
+import { isEmpty, get, last } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
 import { AxisDomain, ReferenceLine, Label } from 'recharts';
 import { DOMAIN_FACTOR } from '../../utils/consts';
+import { presentDiff, presentPercentage } from '../../utils/helpers';
 // @ts-ignore
 import theme from '../../style/_theme.scss';
+// @ts-ignore
+import variables from '../../style/_variables.scss';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
@@ -45,14 +48,17 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     return (
         <Container>
             <div className="header">
-                <h1>Historical</h1>
-                <h3>placeholder</h3>
+                <h1>30d</h1>
+                <h3>
+                    {!isEmpty(result) && presentDiff(get(result[0], 'USD'), get(last(result), 'USD'))}{' '}
+                    {!isEmpty(result) && presentPercentage(get(result[0], 'USD'), get(last(result), 'USD'))}
+                </h3>
             </div>
             {!isEmpty(result) ? (
                 <Chart
                     data={(result as unknown) as ChartPropsItem[]}
                     width={width}
-                    height={height - 100}
+                    height={height - variables.CONTAINER_HEADER_HEIGHT}
                     xAxisFormatter={formatXAxis}
                     refLines={refLines}
                     yDomainMinGenerator={yDomainMinGenerator}

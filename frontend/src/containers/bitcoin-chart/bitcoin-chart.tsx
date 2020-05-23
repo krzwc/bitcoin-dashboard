@@ -14,9 +14,11 @@ import { ChartPropsItem } from '../../components/chart/chart';
 import Loader from '../../components/loader';
 import { Label, ReferenceLine } from 'recharts';
 import moment from 'moment';
-import { rangeWithStep } from '../../utils/helpers';
+import { rangeWithStep, presentDiff, presentPercentage } from '../../utils/helpers';
 // @ts-ignore
 import theme from '../../style/_theme.scss';
+// @ts-ignore
+import variables from '../../style/_variables.scss';
 
 const initialState: List<ChartPropsItem> = List([]);
 
@@ -128,14 +130,26 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                                     )}`,
                                 }}*/
                         >
-                            Current
+                            24h
                         </h1>
-                        <h3>{!pollingLoading && fetchingResult[1]}</h3>
+                        <h3>
+                            ${!pollingLoading && get(chartData.toJS(), '0.USD')}{' '}
+                            {!pollingLoading &&
+                                presentDiff(
+                                    get(historicalFetchingResult.slice(-1), '0.USD'),
+                                    get(chartData.toJS(), '0.USD'),
+                                )}{' '}
+                            {!pollingLoading &&
+                                presentPercentage(
+                                    get(historicalFetchingResult.slice(-1), '0.USD'),
+                                    get(chartData.toJS(), '0.USD'),
+                                )}
+                        </h3>
                     </div>
                     <Chart
                         data={formatResult(chartData)}
                         width={width}
-                        height={height - 100}
+                        height={height - variables.CONTAINER_HEADER_HEIGHT}
                         refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}
                         yDomainMinGenerator={yDomainMinGenerator(
                             get(historicalFetchingResult.slice(-1), '0.USD'),

@@ -35,7 +35,7 @@ const Chart = ({
             width={width}
             height={height}
             data={data}
-            margin={{ top: 20, right: 50, bottom: 20 }}
+            margin={{ left: 30, right: 30, bottom: 20 }}
         >
             {refLines}
             <XAxis dataKey="time" tickFormatter={xAxisFormatter} stroke={theme.MEDIUM_GREY} />
