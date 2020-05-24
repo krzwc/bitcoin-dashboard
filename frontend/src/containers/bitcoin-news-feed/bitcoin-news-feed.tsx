@@ -12,6 +12,8 @@ import { Map } from 'immutable';
 import Loader from '../../components/loader';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import DownArrow from '../../components/down-arrow';
+// @ts-ignore
+import variables from '../../style/_variables.scss';
 
 export interface State {
     count: number;
@@ -50,12 +52,16 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
 
     useInfiniteScroll(bottomBoundaryRef, setUrl, get(state.toJS(), ['next']));
 
+    // tslint:disable-next-line:binary-expression-operand-order
+    const getStyle = width ? { width: width - 2 * variables.CHART_LEFT_RIGHT_PADDING } : {};
+
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
             <DownArrow className={get(state.toJS(), ['next']) ? 'bounce' : 'hide'} />
-            <div className="header">
+            {/* tslint:disable-next-line:binary-expression-operand-order */}
+            <div className="header" style={getStyle}>
                 <h1>News</h1>
-                <h3>placeholder</h3>
+                <h3>Get the latest bitcoin world news</h3>
             </div>
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(get(state.toJS(), ['results'])) ? (

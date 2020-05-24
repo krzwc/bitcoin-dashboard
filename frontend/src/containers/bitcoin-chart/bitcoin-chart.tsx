@@ -50,6 +50,7 @@ const getReferenceLineDataFromHistorical = (fetchingResult: ChartPropsItem[]) =>
                     stroke={theme.MEDIUM_GREY}
                     fill={theme.MEDIUM_GREY}
                     strokeWidth={0.5}
+                    fontSize={variables.FONT_SIZE_REGULAR}
                 />
             </ReferenceLine>
         )
@@ -121,29 +122,30 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
             {fetchingError && <p className="error">{fetchingError}</p>}
             {!isEmpty(chartData.toJS()) && !isEmpty(fetchingResult) && !isEmpty(historicalFetchingResult) ? (
                 <>
-                    <div className="header">
-                        <h1
-                        /*style={{
+                    {/* tslint:disable-next-line:binary-expression-operand-order */}
+                    <div className="header" style={{ width: width - 2 * variables.CHART_LEFT_RIGHT_PADDING }}>
+                        <h1>5min</h1>
+                        <h3>
+                            {!pollingLoading && `$${get(chartData.toJS(), '0.USD')}`}{' '}
+                            <span
+                                style={{
                                     color: `${greenOrRed(
                                         get(historicalFetchingResult.slice(-1), '0.USD'),
                                         get(chartData.toJS(), '0.USD'),
                                     )}`,
-                                }}*/
-                        >
-                            24h
-                        </h1>
-                        <h3>
-                            ${!pollingLoading && get(chartData.toJS(), '0.USD')}{' '}
-                            {!pollingLoading &&
-                                presentDiff(
-                                    get(historicalFetchingResult.slice(-1), '0.USD'),
-                                    get(chartData.toJS(), '0.USD'),
-                                )}{' '}
-                            {!pollingLoading &&
-                                presentPercentage(
-                                    get(historicalFetchingResult.slice(-1), '0.USD'),
-                                    get(chartData.toJS(), '0.USD'),
-                                )}
+                                }}
+                            >
+                                {!pollingLoading &&
+                                    presentDiff(
+                                        get(historicalFetchingResult.slice(-1), '0.USD'),
+                                        get(chartData.toJS(), '0.USD'),
+                                    )}{' '}
+                                {!pollingLoading &&
+                                    `(${presentPercentage(
+                                        get(historicalFetchingResult.slice(-1), '0.USD'),
+                                        get(chartData.toJS(), '0.USD'),
+                                    )})`}
+                            </span>
                         </h3>
                     </div>
                     <Chart

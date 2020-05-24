@@ -15,16 +15,8 @@
     flex-direction: column;
     height: $CONTAINER_HEADER_HEIGHT+px;
     position: relative;
-
-    &::after {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 100%;
-      left: 35%;
-      width: 30%;
-      border-bottom: 1px solid $FONT;
-    }
+    border-bottom: 1px solid $LIGHT_GREY;
+    left: $CHART_LEFT_RIGHT_PADDING+px;
 
     h1 {
       font-weight: $FONT_WEIGHT_BOLD;

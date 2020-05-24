@@ -1,0 +1,28 @@
+.news-feed {
+  list-style: none;
+  padding: 4px 0;
+  margin: 20px $CHART_LEFT_RIGHT_PADDING+px;
+  font-size: $FONT_SIZE_REGULAR;
+
+  li {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+
+    &:first-of-type {
+      margin: 0;
+    }
+
+    .time {
+      font-weight: 600;
+      margin-right: 20px;
+    }
+
+    .link {
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+    }
+  }
+}

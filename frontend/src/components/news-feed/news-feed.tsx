@@ -15,11 +15,14 @@ export interface NewsFeedProps {
 
 const NewsFeed = ({ results }: NewsFeedProps) => {
     return (
-        <ul>
+        <ul className="news-feed">
             {!isEmpty(results) &&
                 results.map((newsItem) => (
                     <li key={newsItem.id}>
-                        {convertTimestamp(newsItem.published_at)} - <a href={newsItem.url}>{newsItem.title}</a>
+                        <span className="time">{convertTimestamp(newsItem.published_at)}</span>
+                        <span className="link">
+                            <a href={newsItem.url}>{newsItem.title}</a>
+                        </span>
                     </li>
                 ))}
         </ul>

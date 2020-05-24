@@ -23,6 +23,9 @@ const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);
 };
 
+const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
+    historicalFetchingResult > currentFetchingResult ? theme.RED : theme.GREEN;
+
 const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * DOMAIN_FACTOR.MIN;
 
 const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * DOMAIN_FACTOR.MAX;
@@ -40,30 +43,39 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                         stroke={theme.MEDIUM_GREY}
                         fill={theme.MEDIUM_GREY}
                         strokeWidth={0.5}
+                        fontSize={variables.FONT_SIZE_REGULAR}
                     />
                 </ReferenceLine>
             );
         });
+    // tslint:disable-next-line:binary-expression-operand-order
+    const getStyle = width ? { width: width - 2 * variables.CHART_LEFT_RIGHT_PADDING } : {};
 
     return (
         <Container>
-            <div className="header">
-                <h1>30d</h1>
-                <h3>
-                    {!isEmpty(result) && presentDiff(get(result[0], 'USD'), get(last(result), 'USD'))}{' '}
-                    {!isEmpty(result) && presentPercentage(get(result[0], 'USD'), get(last(result), 'USD'))}
-                </h3>
-            </div>
-            {!isEmpty(result) ? (
-                <Chart
-                    data={(result as unknown) as ChartPropsItem[]}
-                    width={width}
-                    height={height - variables.CONTAINER_HEADER_HEIGHT}
-                    xAxisFormatter={formatXAxis}
-                    refLines={refLines}
-                    yDomainMinGenerator={yDomainMinGenerator}
-                    yDomainMaxGenerator={yDomainMaxGenerator}
-                />
+            {!isEmpty(result) && width ? (
+                <>
+                    <div className="header" style={getStyle}>
+                        <h1>30d</h1>
+                        <h3
+                            style={{
+                                color: `${greenOrRed(get(result[0], 'USD'), get(last(result), 'USD'))}`,
+                            }}
+                        >
+                            {presentDiff(get(result[0], 'USD'), get(last(result), 'USD'))}{' '}
+                            {`(${presentPercentage(get(result[0], 'USD'), get(last(result), 'USD'))})`}
+                        </h3>
+                    </div>
+                    <Chart
+                        data={(result as unknown) as ChartPropsItem[]}
+                        width={width}
+                        height={height - variables.CONTAINER_HEADER_HEIGHT}
+                        xAxisFormatter={formatXAxis}
+                        refLines={refLines}
+                        yDomainMinGenerator={yDomainMinGenerator}
+                        yDomainMaxGenerator={yDomainMaxGenerator}
+                    />
+                </>
             ) : (
                 <Loader />
             )}
