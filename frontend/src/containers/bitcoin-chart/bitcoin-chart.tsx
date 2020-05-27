@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { List } from 'immutable';
-import { isNull, isEmpty, get } from 'lodash-es';
+import { isNull, isEmpty, get, last } from 'lodash-es';
 import Chart from '../../components/chart';
 import { usePoll, useFetch } from '../../hooks';
 import { TOTAL_X_TICKS, POLLING_INTERVALS, /*DOMAIN_FACTOR,*/ MS_TO_S_FACTOR } from '../../utils/consts';
@@ -72,7 +72,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
     useEffect(() => {
         if (!isNull(pollingResult) && !isNull(pollingResult[0]) && !isNull(pollingResult[1])) {
             if (chartData.every((dataItem) => dataItem.USD !== null)) {
-                setRefLineValue(get(chartData.get(0), 'USD'));
+                setRefLineValue(get(chartData.toJS(), '0.USD'));
             }
             setChartData((data) => {
                 if (data.some((dataItem) => dataItem.USD === null)) {
@@ -123,18 +123,22 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                     <div className="header" style={{ width: width - 2 * variables.CHART_LEFT_RIGHT_PADDING }}>
                         <h1>5min</h1>
                         <h3>
-                            {!pollingLoading && `$${get(chartData.toJS(), '0.USD')}`}{' '}
+                            {!pollingLoading &&
+                                `$${get(
+                                    last(chartData.toJS().filter((chartDataItem) => chartDataItem.USD !== null)),
+                                    'USD',
+                                )}`}{' '}
                             <span
                                 style={{
-                                    color: `${chartStrokeColor(refLineValue, get(chartData.toJS(), '0.USD'))}`,
+                                    color: `${chartStrokeColor(refLineValue, get(last(chartData.toJS()), 'USD'))}`,
                                 }}
                             >
                                 {!pollingLoading &&
                                     refLineValue &&
-                                    presentDiff(refLineValue, get(chartData.toJS(), '0.USD'))}{' '}
+                                    presentDiff(refLineValue, get(last(chartData.toJS()), 'USD'))}{' '}
                                 {!pollingLoading &&
                                     refLineValue &&
-                                    `(${presentPercentage(refLineValue, get(chartData.toJS(), '0.USD'))})`}
+                                    `(${presentPercentage(refLineValue, get(last(chartData.toJS()), 'USD'))})`}
                             </span>
                         </h3>
                     </div>
@@ -152,7 +156,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
                         )}*/
-                        stroke={`${chartStrokeColor(refLineValue, get(chartData.toJS(), '0.USD'))}`}
+                        stroke={`${chartStrokeColor(refLineValue, get(last(chartData.toJS()), 'USD'))}`}
                     />
                 </>
             ) : (

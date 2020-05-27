@@ -12,7 +12,7 @@ export const presentDiff = (referencePrice: number, currentPrice: number) => {
 };
 
 const calculatePercentage = (referencePrice: number, currentPrice: number) =>
-    Number(calculateDiff(referencePrice, currentPrice)) / referencePrice;
+    (Number(calculateDiff(referencePrice, currentPrice)) * 100) / referencePrice;
 
 export const presentPercentage = (referencePrice: number, currentPrice: number) => {
     const perc = Number(calculatePercentage(referencePrice, currentPrice).toFixed(2));
