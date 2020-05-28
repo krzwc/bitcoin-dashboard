@@ -12,7 +12,7 @@ import Loader from '../../components/loader';
 import { isEmpty, get, last } from 'lodash-es';
 import { getRefLines, dataBoundries } from './helpers';
 import { AxisDomain, ReferenceLine, Label } from 'recharts';
-import { DOMAIN_FACTOR } from '../../utils/consts';
+import { HISTORICAL_DOMAIN_FACTOR } from '../../utils/consts';
 import { presentDiff, presentPercentage } from '../../utils/helpers';
 // @ts-ignore
 import theme from '../../style/_theme.scss';
@@ -26,9 +26,9 @@ const formatXAxis = (tickItem: string) => {
 const greenOrRed = (historicalFetchingResult: number, currentFetchingResult: number) =>
     historicalFetchingResult > currentFetchingResult ? theme.RED : theme.GREEN;
 
-const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * DOMAIN_FACTOR.MIN;
+const yDomainMinGenerator = (dataMin: number): AxisDomain => dataMin * HISTORICAL_DOMAIN_FACTOR.MIN;
 
-const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * DOMAIN_FACTOR.MAX;
+const yDomainMaxGenerator = (dataMax: number): AxisDomain => dataMax * HISTORICAL_DOMAIN_FACTOR.MAX;
 
 const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
     const [result] = useFetch(ENDPOINTS.HISTORICAL, historicalDataFormatter);

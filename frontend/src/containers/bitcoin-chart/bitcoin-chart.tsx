@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { List } from 'immutable';
-import { isNull, isEmpty, get, last } from 'lodash-es';
+import { isNull, isEmpty, get, last, compact } from 'lodash-es';
 import Chart from '../../components/chart';
 import { usePoll, useFetch } from '../../hooks';
-import { TOTAL_X_TICKS, POLLING_INTERVALS, /*DOMAIN_FACTOR,*/ MS_TO_S_FACTOR } from '../../utils/consts';
+import { TOTAL_X_TICKS, POLLING_INTERVALS, CURRENT_DOMAIN_FACTOR, MS_TO_S_FACTOR } from '../../utils/consts';
 import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
 import { ENDPOINTS } from '../../utils/endpoint';
@@ -37,6 +37,9 @@ const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingRe
         ? historicalFetchingResult * DOMAIN_FACTOR.MAX
         : currentFetchingResult * DOMAIN_FACTOR.MAX;
 };*/
+
+const yDomainMinGenerator = (values: number[]) => Math.min(...values) * CURRENT_DOMAIN_FACTOR.MIN;
+const yDomainMaxGenerator = (values: number[]) => Math.max(...values) * CURRENT_DOMAIN_FACTOR.MAX;
 
 const renderReferenceLine = (refValue: string) => {
     return (
@@ -156,6 +159,12 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                             get(historicalFetchingResult.slice(-1), '0.USD'),
                             get(chartData.toJS(), '0.USD'),
                         )}*/
+                        yDomainMinGenerator={yDomainMinGenerator(
+                            compact(chartData.toJS().map((dataItem) => dataItem.USD)),
+                        )}
+                        yDomainMaxGenerator={yDomainMaxGenerator(
+                            compact(chartData.toJS().map((dataItem) => dataItem.USD)),
+                        )}
                         stroke={`${chartStrokeColor(refLineValue, get(last(chartData.toJS()), 'USD'))}`}
                     />
                 </>
