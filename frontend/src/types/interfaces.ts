@@ -80,4 +80,4 @@ export interface NewsData {
     }[];
 }
 
-export type Response = StrictUnion<CurrentData | HistoricalData | NewsData>
+export type Response = StrictUnion<CurrentData | HistoricalData | NewsData>;
