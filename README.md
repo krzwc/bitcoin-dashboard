@@ -11,7 +11,8 @@ The app should be running at [http://localhost:3000](http://localhost:3000).
 * DRY color/numerical vars shared by react & scss
 * immutable.js data structures as react functional components state
 * fetching & polling react hooks
-* infinite scroll with `IntersectionObserver`
+* infinite scroll hook with `IntersectionObserver` ([ref](https://www.smashingmagazine.com/2020/03/infinite-scroll-lazy-image-loading-react/))
 * node.js based REST API proxy
 * using SVGs in react
 * `docker` / `docker-compose` based launching
+* root path imports ([ref](https://medium.com/@martin_hotell/type-safe-es2015-module-import-path-aliasing-with-webpack-typescript-and-jest-fe461347e010))
