@@ -1,6 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash-es';
-import { convertTimestamp } from '../../utils/timeservice';
+import { convertTimestamp } from 'utils/timeservice';
 
 export interface NewsItem {
     published_at: string;

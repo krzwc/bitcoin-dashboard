@@ -1,5 +1,5 @@
 import React from 'react';
-import downArrowSvg from '../../assets/svg/down-arrow.svg';
+import downArrowSvg from 'assets/svg/down-arrow.svg';
 
 interface DownArrowProps {
     className: string;

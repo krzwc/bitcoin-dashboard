@@ -16,6 +16,15 @@ module.exports = {
     resolve: {
         modules: [__dirname, 'src', 'node_modules'],
         extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
+        alias: {
+            assets: path.resolve(__dirname, 'src/assets/'),
+            components: path.resolve(__dirname, 'src/components/'),
+            containers: path.resolve(__dirname, 'src/containers/'),
+            hooks: path.resolve(__dirname, 'src/hooks/'),
+            style: path.resolve(__dirname, 'src/style/'),
+            types: path.resolve(__dirname, 'src/types/'),
+            utils: path.resolve(__dirname, 'src/utils/'),
+        }
     },
     module: {
         rules: [

@@ -1,6 +1,7 @@
 import { useReducer, useCallback, Reducer } from 'react';
-import { State, Action, EnhancedDispatch } from '../interfaces';
 import { isFunction } from 'lodash-es';
+
+import { State, Action, EnhancedDispatch } from '../interfaces';
 
 const useThunkReducer = (reducer: Reducer<State, Action>, initialState: State): [State, EnhancedDispatch] => {
     const [state, dispatch] = useReducer(reducer, initialState);

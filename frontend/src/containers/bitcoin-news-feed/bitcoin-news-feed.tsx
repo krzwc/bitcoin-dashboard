@@ -1,19 +1,21 @@
-import React, { useEffect, useState, useRef /*, SyntheticEvent*/ } from 'react';
-import NewsFeed from '../../components/news-feed';
-import Container from '../../components/container';
+import React, { useEffect, useState, useRef } from 'react';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINTS, convertURL } from '../../utils/endpoint';
-import { ResizeDetectorChartProps } from '../interfaces';
-import { useFetch } from '../../hooks';
 import { get, isNull, isEmpty } from 'lodash-es';
-import { newsDataFormatter } from '../../utils/formatter';
-import { NewsItem } from '../../components/news-feed/news-feed';
 import { Map } from 'immutable';
-import Loader from '../../components/loader';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import DownArrow from '../../components/down-arrow';
+
+import NewsFeed from 'components/news-feed';
+import Container from 'components/container';
+import { ENDPOINTS, convertURL } from 'utils/endpoint';
+import { useFetch } from 'hooks/index';
+import { newsDataFormatter } from 'utils/formatter';
+import { NewsItem } from 'components/news-feed/news-feed';
+import Loader from 'components/loader';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import DownArrow from 'components/down-arrow';
 // @ts-ignore
 import variables from '../../style/_variables.scss';
+
+import { ResizeDetectorChartProps } from '../interfaces';
 
 export interface State {
     count: number;

@@ -1,23 +1,25 @@
 import React from 'react';
-import Chart from '../../components/chart';
-import { ChartPropsItem } from '../../components/chart/chart';
-import { useFetch } from '../../hooks';
-import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINTS } from '../../utils/endpoint';
-import { historicalDataFormatter } from '../../utils/formatter';
-import { ResizeDetectorChartProps } from '../interfaces';
-import { convertTimestamp, TIMEFORMATS } from '../../utils/timeservice';
-import Loader from '../../components/loader';
 import { isEmpty, get, last } from 'lodash-es';
-import { getRefLines, dataBoundries } from './helpers';
 import { AxisDomain, ReferenceLine, Label } from 'recharts';
-import { HISTORICAL_DOMAIN_FACTOR } from '../../utils/consts';
-import { presentDiff, presentPercentage } from '../../utils/helpers';
+
+import Chart from 'components/chart';
+import { ChartPropsItem } from 'components/chart/chart';
+import { useFetch } from 'hooks/index';
+import Container from 'components/container';
+import { ENDPOINTS } from 'utils/endpoint';
+import { historicalDataFormatter } from 'utils/formatter';
+import { convertTimestamp, TIMEFORMATS } from 'utils/timeservice';
+import Loader from 'components/loader';
+import { HISTORICAL_DOMAIN_FACTOR } from 'utils/consts';
+import { presentDiff, presentPercentage } from 'utils/helpers';
 // @ts-ignore
-import theme from '../../style/_theme.scss';
+import theme from 'style/_theme.scss';
 // @ts-ignore
-import variables from '../../style/_variables.scss';
+import variables from 'style/_variables.scss';
+
+import { ResizeDetectorChartProps } from '../interfaces';
+import { getRefLines, dataBoundries } from './helpers';
 
 const formatXAxis = (tickItem: string) => {
     return convertTimestamp(tickItem, TIMEFORMATS.DAYS_ONLY);

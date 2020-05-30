@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { List } from 'immutable';
-import { isNull, isEmpty, get, last, compact } from 'lodash-es';
-import Chart from '../../components/chart';
-import { usePoll, useFetch } from '../../hooks';
-import { TOTAL_X_TICKS, POLLING_INTERVALS, CURRENT_DOMAIN_FACTOR, MS_TO_S_FACTOR } from '../../utils/consts';
-import Container from '../../components/container';
 import { withResizeDetector } from 'react-resize-detector';
-import { ENDPOINTS } from '../../utils/endpoint';
-import { currentDataFormatter, historicalDataFormatter } from '../../utils/formatter';
-import { ResizeDetectorChartProps } from '../interfaces';
-import { convertTimestamp } from '../../utils/timeservice';
-import { ChartPropsItem } from '../../components/chart/chart';
-import Loader from '../../components/loader';
+import { isNull, isEmpty, get, last, compact } from 'lodash-es';
 import { Label, ReferenceLine } from 'recharts';
 import moment from 'moment';
-import { rangeWithStep, presentDiff, presentPercentage } from '../../utils/helpers';
+
+import Chart from 'components/chart';
+import { usePoll, useFetch } from 'hooks/index';
+import { TOTAL_X_TICKS, POLLING_INTERVALS, CURRENT_DOMAIN_FACTOR, MS_TO_S_FACTOR } from 'utils/consts';
+import Container from 'components/container';
+import { ENDPOINTS } from 'utils/endpoint';
+import { currentDataFormatter, historicalDataFormatter } from 'utils/formatter';
+
+import { convertTimestamp } from 'utils/timeservice';
+import { ChartPropsItem } from 'components/chart/chart';
+import Loader from 'components/loader';
+import { rangeWithStep, presentDiff, presentPercentage } from 'utils/helpers';
 // @ts-ignore
-import theme from '../../style/_theme.scss';
+import theme from 'style/_theme.scss';
 // @ts-ignore
-import variables from '../../style/_variables.scss';
+import variables from 'style/_variables.scss';
+
+import { ResizeDetectorChartProps } from '../interfaces';
 
 const initialState: List<ChartPropsItem> = List([]);
 
 const formatResult = (result: List<ChartPropsItem>): ChartPropsItem[] => {
     return result.toJS().map((resultItem) => ({ ...resultItem, time: convertTimestamp(resultItem.time) }));
 };
-
-/*const yDomainMinGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
-    return historicalFetchingResult > currentFetchingResult
-        ? currentFetchingResult * DOMAIN_FACTOR.MIN
-        : historicalFetchingResult * DOMAIN_FACTOR.MIN;
-};
-
-const yDomainMaxGenerator = (historicalFetchingResult: number, currentFetchingResult: number) => {
-    return historicalFetchingResult > currentFetchingResult
-        ? historicalFetchingResult * DOMAIN_FACTOR.MAX
-        : currentFetchingResult * DOMAIN_FACTOR.MAX;
-};*/
 
 const yDomainMinGenerator = (values: number[]) => Math.min(...values) * CURRENT_DOMAIN_FACTOR.MIN;
 const yDomainMaxGenerator = (values: number[]) => Math.max(...values) * CURRENT_DOMAIN_FACTOR.MAX;
@@ -149,16 +140,7 @@ const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {
                         data={formatResult(chartData)}
                         width={width}
                         height={height - variables.CONTAINER_HEADER_HEIGHT}
-                        /*refLines={getReferenceLineDataFromHistorical(historicalFetchingResult)}*/
                         refLines={renderReferenceLine(refLineValue)}
-                        /*yDomainMinGenerator={yDomainMinGenerator(
-                            get(historicalFetchingResult.slice(-1), '0.USD'),
-                            get(chartData.toJS(), '0.USD'),
-                        )}
-                        yDomainMaxGenerator={yDomainMaxGenerator(
-                            get(historicalFetchingResult.slice(-1), '0.USD'),
-                            get(chartData.toJS(), '0.USD'),
-                        )}*/
                         yDomainMinGenerator={yDomainMinGenerator(
                             compact(chartData.toJS().map((dataItem) => dataItem.USD)),
                         )}

@@ -1,6 +1,6 @@
+import { Response } from 'types/interfaces';
 import ACTIONS from '../actions';
 import { EnhancedDispatch } from '../interfaces';
-import { Response } from '../../types/interfaces';
 
 interface Fetch {
     dispatch: EnhancedDispatch;

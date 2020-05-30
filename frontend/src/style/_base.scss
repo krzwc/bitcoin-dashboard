@@ -5,8 +5,8 @@ a, p, span, div, table, tr, td, h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-  background: $DARK_YELLOW;
-  background: linear-gradient(to top right, $DARK_YELLOW 0%, $LIGHT_YELLOW 100%);
+  background: $BG_DARK;
+  background: linear-gradient(to top right, $BG_DARK 0%, $BG_LIGHT 100%);
   box-sizing: border-box;
   padding: 50px;
 }

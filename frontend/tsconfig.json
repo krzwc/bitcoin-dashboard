@@ -16,7 +16,17 @@
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "assets/*": ["src/assets/*"],
+      "components/*": ["src/components/*"],
+      "containers/*": ["src/containers/*"],
+      "hooks/*": ["src/hooks/*"],
+      "style/*": ["src/style/*"],
+      "types/*": ["src/types/*"],
+      "utils/*": ["src/utils/*"]
+    }
   },
   "exclude": ["./config/", "./node_modules/*"]
 }

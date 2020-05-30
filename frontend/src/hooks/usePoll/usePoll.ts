@@ -1,8 +1,9 @@
-import reducer from '../useThunkReducer/reducer';
-import useThunkReducer from '../useThunkReducer';
+import reducer from 'hooks/useThunkReducer/reducer';
+import useThunkReducer from 'hooks/useThunkReducer';
+import { Response } from 'types/interfaces';
+
 import pollData from './pollData';
 import initialState from '../initialState';
-import { Response } from '../../types/interfaces';
 
 const usePoll = (endpoint: string, interval: number, formatter: (response: Response) => {}) => {
     const [state, enhancedDispatch] = useThunkReducer(reducer, initialState);
