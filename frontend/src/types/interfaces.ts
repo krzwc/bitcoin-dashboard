@@ -9,14 +9,15 @@ type StrictUnionHelper<T, TAll> = T extends T
     : never;
 export type StrictUnion<T> = StrictUnionHelper<T, T>;
 
-enum CURRENCIES {
+export enum CURRENCIES {
     USD = 'USD',
     GBP = 'GBP',
     EUR = 'EUR',
 }
 export interface CurrentData {
     time: {
-        update: string;
+        updated: string;
+        updatedISO: string;
         updateduk: string;
     };
     disclaimer: string;

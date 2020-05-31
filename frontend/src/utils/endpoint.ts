@@ -4,7 +4,7 @@ export const ENDPOINTS = {
     CURRENT: BASEURL + '/current',
     HISTORICAL: BASEURL + '/historical',
     NEWS: BASEURL + '/news',
-}
+};
 
 export const convertURL = (url: string): string => {
     const urlArr = url.split('=');
