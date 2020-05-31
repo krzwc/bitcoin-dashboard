@@ -1,13 +1,14 @@
 import React from 'react';
-import Dashboard from './components/dashboard';
-import './style/app.scss';
+
+import Dashboard from 'components/dashboard';
+import 'style/app.scss';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import generateGrid from './utils/generateGrid';
+import generateGrid from 'utils/generateGrid';
 
-import BitcoinChart from './containers/bitcoin-chart';
-import HistoricalChart from './containers/historical-chart';
-import BitcoinNewsFeed from './containers/bitcoin-news-feed';
+import BitcoinChart from 'containers/bitcoin-chart';
+import HistoricalChart from 'containers/historical-chart';
+import BitcoinNewsFeed from 'containers/bitcoin-news-feed';
 
 const components = [<BitcoinChart key={1} />, <HistoricalChart key={2} />, <BitcoinNewsFeed key={3} />];
 const layout = {

@@ -69,7 +69,7 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                         </h3>
                     </div>
                     <Chart
-                        data={(result as unknown) as ChartPropsItem[]}
+                        data={result as ChartPropsItem[]}
                         width={width}
                         height={height - variables.CONTAINER_HEADER_HEIGHT}
                         xAxisFormatter={formatXAxis}

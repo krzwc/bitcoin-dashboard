@@ -13,7 +13,7 @@ import Loader from 'components/loader';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import DownArrow from 'components/down-arrow';
 // @ts-ignore
-import variables from '../../style/_variables.scss';
+import variables from 'style/_variables.scss';
 
 import { ResizeDetectorChartProps } from '../interfaces';
 
@@ -34,7 +34,6 @@ const initialState: Map<string, State[keyof State]> = Map({
 const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     const [state, setState] = useState(initialState);
     const [url, setUrl] = useState(ENDPOINTS.NEWS);
-
     const [fetchingResult, fetchingError] = useFetch(url, newsDataFormatter);
 
     useEffect(() => {
@@ -60,7 +59,6 @@ const BitcoinNewsFeed = ({ width, height }: ResizeDetectorChartProps) => {
     return (
         <Container ref={bottomBoundaryRef} width={width} height={height}>
             <DownArrow className={get(state.toJS(), ['next']) ? 'bounce' : 'hide'} />
-            {/* tslint:disable-next-line:binary-expression-operand-order */}
             <div className="header" style={getStyle}>
                 <h1>News</h1>
                 <h3>Get the latest bitcoin world news</h3>
