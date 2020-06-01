@@ -3,7 +3,7 @@ export const rangeWithStep = (start: number, stepValue: number, steps: number) =
         .fill(0)
         .map((v, i) => start + i * stepValue);
 
-const calculateDiff = (referencePrice: number, currentPrice: number) => currentPrice - referencePrice;
+export const calculateDiff = (referencePrice: number, currentPrice: number) => currentPrice - referencePrice;
 
 export const presentDiff = (referencePrice: number, currentPrice: number) => {
     const diff = Number(calculateDiff(referencePrice, currentPrice).toFixed(2));
@@ -11,7 +11,7 @@ export const presentDiff = (referencePrice: number, currentPrice: number) => {
     return diff > 0 ? `+${diff}` : diff;
 };
 
-const calculatePercentage = (referencePrice: number, currentPrice: number) =>
+export const calculatePercentage = (referencePrice: number, currentPrice: number) =>
     (Number(calculateDiff(referencePrice, currentPrice)) * 100) / referencePrice;
 
 export const presentPercentage = (referencePrice: number, currentPrice: number) => {
