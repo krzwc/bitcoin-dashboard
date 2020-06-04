@@ -72,6 +72,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "enzyme-to-json": "^3.5.0",
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "react": "^16.12.0",

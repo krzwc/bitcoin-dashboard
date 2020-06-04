@@ -14,7 +14,7 @@
   "setupFiles": ["<rootDir>/setupTests.js"],
   "moduleNameMapper": {
     "^.+\\.(css|less|scss)$": "babel-jest",
-    "^.+\\.(jpg|png|gif|svg)$": "identity-obj-proxy",
+    "^.+\\.(jpg|png|gif|svg)$": "<rootDir>/src/__mocks__/fileMock.js",
     "^assets/(.*)": "<rootDir>/src/assets/$1",
     "^components/(.*)": "<rootDir>/src/components/$1",
     "^containers/(.*)": "<rootDir>/src/containers/$1",

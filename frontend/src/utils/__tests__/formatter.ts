@@ -48,7 +48,7 @@ const historicalData = {
     time: { updated: 'May 31, 2020 00:03:00 UTC', updatedISO: '2020-05-31T00:03:00+00:00' },
 };
 
-const newsData = {
+export const newsData = {
     count: 200,
     next:
         'https://cryptopanic.com/api/v1/posts/?auth_token=f39e3c4c154353a7352f963968c90e5d88616555&currencies=BTC&regions=en&public=true&page=2',
@@ -57,7 +57,7 @@ const newsData = {
         {
             kind: 'news',
             domain: 'cointelegraph.com',
-            source: { title: 'CoinTelegraph', region: 'en', domain: 'cointelegraph.com', path: null as string},
+            source: { title: 'CoinTelegraph', region: 'en', domain: 'cointelegraph.com', path: null as string },
             title: 'Crypto and Fiat Currencies Are Worlds Apart, Here Are the Reasons Why',
             published_at: '2020-05-31T07:15:00Z',
             slug: 'Crypto-and-Fiat-Currencies-Are-Worlds-Apart-Here-Are-the-Reasons-Why',
@@ -111,7 +111,7 @@ const newsData = {
         {
             kind: 'news',
             domain: 'beincrypto.com',
-            source: { title: 'BeInCrypto', region: 'en', domain: 'beincrypto.com', path: null as string},
+            source: { title: 'BeInCrypto', region: 'en', domain: 'beincrypto.com', path: null as string },
             title: 'Roger Ver Claims Meeting with Head of State Regarding Bitcoin Cash National Adoption',
             published_at: '2020-05-31T06:40:55Z',
             slug: 'Roger-Ver-Claims-Meeting-with-Head-of-State-Regarding-Bitcoin-Cash-National-Adoption',
