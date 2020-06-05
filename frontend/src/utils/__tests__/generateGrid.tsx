@@ -1,7 +1,7 @@
 import React from 'react';
 import generateGrid from '../generateGrid';
 
-const layout = {
+export const layout = {
     lg: [
         { x: 1, y: 1, w: 1, h: 1 },
         { x: 2, y: 2, w: 2, h: 2 },
@@ -9,7 +9,7 @@ const layout = {
     ],
 };
 
-const components = [<div key={1} />, <div key={2} />, <div key={3} />];
+export const components = [<div key={1} />, <div key={2} />, <div key={3} />];
 
 describe('generateGrid', () => {
     test('generates grid properly', () => {
