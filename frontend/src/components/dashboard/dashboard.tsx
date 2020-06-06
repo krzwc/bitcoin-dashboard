@@ -64,3 +64,4 @@ const Dashboard: FunctionComponent<DashboardProps> = ({ gridItems }) => {
 };
 
 export default Dashboard;
+export { addI, generateLayout, generateDOM, getLayoutsAndDomLayouts };
