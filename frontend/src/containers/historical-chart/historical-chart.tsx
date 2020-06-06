@@ -77,6 +77,7 @@ const HistoricalChart = ({ width, height }: ResizeDetectorChartProps) => {
                         yDomainMinGenerator={yDomainMinGenerator}
                         yDomainMaxGenerator={yDomainMaxGenerator}
                     />
+                    {/*{console.log(dataBoundries(result))}*/}
                 </>
             ) : (
                 <Loader />
