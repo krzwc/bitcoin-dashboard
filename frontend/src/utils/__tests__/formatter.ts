@@ -1,4 +1,5 @@
 import { currentDataFormatter, historicalDataFormatter, newsDataFormatter } from '../formatter';
+import { chartDataMock } from 'components/chart/__tests__/chart';
 // @ts-ignore
 import { CURRENCIES } from 'types/interfaces';
 
@@ -149,13 +150,7 @@ describe('Formatters', () => {
         expect(currentDataFormatter(null)).toStrictEqual([null, null]);
     });
     test('historicalDataFormatter formats properly', () => {
-        expect(historicalDataFormatter(historicalData)).toStrictEqual([
-            { time: '2020-04-30', USD: 8740.75 },
-            { time: '2020-05-01', USD: 8771.5725 },
-            { time: '2020-05-02', USD: 8891.445 },
-            { time: '2020-05-03', USD: 8819.01 },
-            { time: '2020-05-04', USD: 8801.36 },
-        ]);
+        expect(historicalDataFormatter(historicalData)).toStrictEqual(chartDataMock);
     });
     test('newsDataFormatter formats properly', () => {
         expect(newsDataFormatter(newsData)).toStrictEqual(newsData);

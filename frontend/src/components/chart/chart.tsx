@@ -22,7 +22,7 @@ interface ChartProps {
     xAxisFormatter?(tickItem: string): string;
 }
 
-const yAxisFormatter = (value: number) => value.toFixed(0);
+export const yAxisFormatter = (value: number) => value.toFixed(0);
 
 const Chart = ({
     data,

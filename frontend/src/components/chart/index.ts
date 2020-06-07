@@ -1,1 +1,1 @@
-export { default } from './chart';
+export { default, yAxisFormatter } from './chart';
