@@ -6,14 +6,16 @@
   "scripts": {
     "start": "webpack-dev-server --mode=development --port 3000 --host 0.0.0.0 --open --hot",
     "build": "webpack --config webpack.config.js --mode production",
-    "test": "jest --config=jest.config.json",
     "________________________________Code Linting________________________________": "",
     "lint": "npm run lint:script && npm run lint:style && npm run lint:types",
     "lint:script": "npm run lint:exact -- 'app/**/!(*.d).ts{,x}' 'config/**/!(*.d).ts{,x}'",
     "lint:script:fix": "npm run lint:exact -- --fix 'app/**/!(*.d).ts{,x}' 'config/**/!(*.d).ts{,x}'",
     "lint:exact": "tslint -p ./tsconfig.lint.json -c tslint.json -t stylish",
     "lint:style": "stylelint 'app/**/*.scss'",
-    "lint:types": "tsc --noEmit"
+    "lint:types": "tsc --noEmit",
+    "________________________________Code testing________________________________": "",
+    "test": "jest --config=jest.config.json",
+    "cypress:open": "cypress open"
   },
   "husky": {
     "hooks": {
@@ -39,6 +41,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.1",
+    "cypress": "^4.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "file-loader": "^5.0.2",
