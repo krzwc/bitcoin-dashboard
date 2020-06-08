@@ -28,5 +28,5 @@
       "utils/*": ["src/utils/*"]
     }
   },
-  "exclude": ["./config/", "./node_modules/*"]
+  "exclude": ["./config/", "./node_modules/*", "./cypress/*"]
 }
