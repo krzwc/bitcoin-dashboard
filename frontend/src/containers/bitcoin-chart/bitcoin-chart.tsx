@@ -29,8 +29,8 @@ const formatResult = (result: List<ChartPropsItem>): ChartPropsItem[] => {
     return result.toJS().map((resultItem) => ({ ...resultItem, time: convertTimestamp(resultItem.time) }));
 };
 
-const yDomainMinGenerator = (values: number[]) => Math.min(...values) * CURRENT_DOMAIN_FACTOR.MIN;
-const yDomainMaxGenerator = (values: number[]) => Math.max(...values) * CURRENT_DOMAIN_FACTOR.MAX;
+export const yDomainMinGenerator = (values: number[]) => Math.min(...values) * CURRENT_DOMAIN_FACTOR.MIN;
+export const yDomainMaxGenerator = (values: number[]) => Math.max(...values) * CURRENT_DOMAIN_FACTOR.MAX;
 
 const renderReferenceLine = (refValue: string) => {
     return (

@@ -1,1 +1,1 @@
-export { default } from './bitcoin-chart';
+export { default, yDomainMinGenerator, yDomainMaxGenerator } from './bitcoin-chart';
