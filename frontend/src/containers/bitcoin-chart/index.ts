@@ -1,1 +1,7 @@
-export { default, yDomainMinGenerator, yDomainMaxGenerator } from './bitcoin-chart';
+export {
+    default,
+    yDomainMinGenerator,
+    yDomainMaxGenerator,
+    renderReferenceLine,
+    chartStrokeColor,
+} from './bitcoin-chart';

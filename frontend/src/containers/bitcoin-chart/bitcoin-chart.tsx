@@ -32,7 +32,7 @@ const formatResult = (result: List<ChartPropsItem>): ChartPropsItem[] => {
 export const yDomainMinGenerator = (values: number[]) => Math.min(...values) * CURRENT_DOMAIN_FACTOR.MIN;
 export const yDomainMaxGenerator = (values: number[]) => Math.max(...values) * CURRENT_DOMAIN_FACTOR.MAX;
 
-const renderReferenceLine = (refValue: string) => {
+export const renderReferenceLine = (refValue: string) => {
     return (
         refValue && (
             <ReferenceLine y={Number(refValue)} stroke={theme.LIGHT_GREY}>
@@ -49,7 +49,7 @@ const renderReferenceLine = (refValue: string) => {
     );
 };
 
-const chartStrokeColor = (refValue: number, currentValue: number) =>
+export const chartStrokeColor = (refValue: number, currentValue: number) =>
     refValue ? (refValue > currentValue ? theme.RED : theme.GREEN) : theme.DARK;
 
 const BitcoinChart = ({ width, height }: ResizeDetectorChartProps) => {

@@ -1,6 +1,13 @@
-/*import React from 'react';*/
-/*import { mount } from 'enzyme';*/
-import { /*BitcoinChart,*/ yDomainMinGenerator, yDomainMaxGenerator } from 'containers/bitcoin-chart';
+/*import React from 'react';
+import { mount } from 'enzyme';*/
+import {
+    /*BitcoinChart,*/ yDomainMinGenerator,
+    yDomainMaxGenerator,
+    chartStrokeColor,
+} from 'containers/bitcoin-chart';
+// @ts-ignore
+import theme from 'style/_theme.scss';
+
 /*import Chart from 'components/chart';
 import { chartDataMock } from 'components/chart/__tests__/chart';*/
 
@@ -27,6 +34,9 @@ describe('BitcoinChart', () => {
         });
         test('yDomainMinGenerator works as expected', () => {
             expect(yDomainMaxGenerator([1, 2, 3])).toStrictEqual(3.0015);
+        });
+        test('chartStrokeColor works as expected', () => {
+            expect(chartStrokeColor(1, 2)).toStrictEqual(theme.GREEN);
         });
     });
 });
