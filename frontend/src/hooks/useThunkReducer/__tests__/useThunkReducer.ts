@@ -12,13 +12,13 @@ const mockedReducer = (state: State, action: Action): State => {
     }
 };
 
-const mockedInitialState: State = {
+export const mockedInitialState: State = {
     result: '',
     loading: false,
     error: '',
 };
 
-const mockedChangedState = {
+export const mockedChangedState = {
     result: 'test',
     loading: false,
     error: '',
