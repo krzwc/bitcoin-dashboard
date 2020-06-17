@@ -15,7 +15,9 @@
     "lint:types": "tsc --noEmit",
     "________________________________Code testing________________________________": "",
     "test": "jest --config=jest.config.json",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:spec": "npm run cypress:run -- --headless --spec \"cypress/integration/sample_spec.ts\""
   },
   "husky": {
     "hooks": {
