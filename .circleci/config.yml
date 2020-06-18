@@ -1,0 +1,18 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd frontend && npm install
+            - run: cd frontend && npm test
+            - run: cd frontend && npm run cypress:run:spec
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
