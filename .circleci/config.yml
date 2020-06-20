@@ -1,18 +1,117 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:12
+#  circleci-executor:
+#    docker:
+#      - image: cypress/base:8
+#        environment:
+#          TERM: xterm
+
+aliases:
+  restore_cache: &restore_cache
+      restore_cache:
+        name: Restore Npm Package Cache
+        keys:
+          - npm-cache-v1-{{ checksum "frontend/package-lock.json" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install dependencies
+      command: cd frontend && npm ci
+
+  save_cache: &save_cache
+    save_cache:
+      name: Save NPM package cache
+      key: npm-cache-v1-{{ checksum "frontend/package-lock.json" }}
+      paths:
+        - ./frontend/node_modules
+
+#  restore_frontend_cache: &restore_frontend_cache
+#    restore_cache:
+#      name: Restore Npm Package Cache
+#      keys:
+#        - cache-{{ checksum "frontend/package-lock.json" }}
+#
+#  install_frontend_node_modules: &install_frontend_node_modules
+#    run:
+#      name: Install dependencies
+#      command: cd frontend && npm ci
+#
+#  save_frontend_cache: &save_frontend_cache
+#    save_cache:
+#      name: Save NPM package cache
+#      key: cache-{{ checksum "frontend/package-lock.json" }}
+#      paths:
+#        - ./frontend/node_modules
+#        - ./.cache
+#
+#  restore_proxy_cache: &restore_proxy_cache
+#    restore_cache:
+#      name: Restore Npm Package Cache
+#      keys:
+#        - cache-{{ checksum "proxy/package-lock.json" }}
+#
+#    install_proxy_node_modules: &install_proxy_node_modules
+#      run:
+#        name: Install dependencies
+#        command: cd proxy && npm ci
+#
+#    save_proxy_cache: &save_proxy_cache
+#      save_cache:
+#        name: Save NPM package cache
+#        key: cache-{{ checksum "proxy/package-lock.json" }}
+#        paths:
+#          - ./proxy/node_modules
+#          - ./.cache
+
 jobs:
-  build-and-test:
-    executor:
-      name: node/default
+  jest-tests:
+    executor: node-executor
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: cd frontend && npm install
-            - run: cd frontend && npm test
-            - run: cd frontend && npm run cypress:run:spec
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *save_cache
+      - run:
+          name: Jest tests
+          command: cd frontend && npm test
+
+#  cypress-tests:
+#    executor: circleci-executor
+#    steps:
+#      - checkout
+#      - <<: *restore_proxy_cache
+#      - <<: *install_proxy_node_modules
+#      - <<: *save_proxy_cache
+#      - run:
+#          name: 'Start proxy'
+#          command: cd proxy && npm run start
+#          background: true
+#      - <<: *restore_frontend_cache
+#      - <<: *install_frontend_node_modules
+#      - <<: *save_frontend_cache
+#      - run:
+#          name: 'Start ui'
+#          command: cd frontend && npm run start
+#          background: true
+#      - run:
+#          name: Cypress tests
+#          command: cd frontend && $(npm bin)/cypress run --headless
+
+
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  version: 2.1
+  build_and_test:
+    jobs:
+      - jest-tests:
+          filters:
+            branches:
+              only:
+               - master
+#      - cypress-tests:
+#          filters:
+#            branches:
+#              only:
+#                - master

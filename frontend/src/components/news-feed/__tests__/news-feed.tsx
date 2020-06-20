@@ -13,7 +13,8 @@ describe('NewsFeed component', () => {
                 .first()
                 .find('span')
                 .first()
-                .text(),
-        ).toContain('09:15');
+                .text()
+                .split(':')[1],
+        ).toContain('15');
     });
 });
