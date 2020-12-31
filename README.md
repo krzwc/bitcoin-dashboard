@@ -2,6 +2,8 @@
 To launch run `docker-compose up` or individually run `npm run start` both in `/proxy` and `/frontend`.<br>
 The app should be running at [http://localhost:3000](http://localhost:3000).
 
+![screencast](./assets/screencast.gif)
+
 ## Tricky parts solved - for future reference
 * functional-component-based architecture with async actions and a thunk reducer
 * scss hierarchical architecture
